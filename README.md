@@ -7,6 +7,3 @@ More info on Eclipse Phase:
  
 Transhuman can be purchased here:
  http://eclipsephase.com/releases/transhuman
-
-Original coding by terrasaur
-
