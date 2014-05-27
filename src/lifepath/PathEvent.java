@@ -235,8 +235,9 @@ public class PathEvent {
 		PathEvent ev = VariableRollObject.findResult(PathEvent.backgroundEvent, roll);
 		ev.timeline = "Background";
 		if (ev.action == ActionType.getStoryEvent){
-			Die d100 = new Die(100);
-			ev.fluff = "(story event) " + VariableRollObject.findResult(PathEvent.storyEvent, d100.Roll());
+			//Die d100 = new Die(100);
+			ev.fluff = "(story event) " + getStoryEvent(false).fluff;
+					//VariableRollObject.findResult(PathEvent.storyEvent, d100.Roll()).;
 		} 
 		return ev;
 	}
@@ -247,7 +248,7 @@ public class PathEvent {
 		PathEvent ev = VariableRollObject.findResult(PathEvent.preFallEvent, roll);
 		ev.timeline = "Pre-Fall";
 		if (ev.action == ActionType.getStoryEvent){
-			ev.fluff = "(story event) " + VariableRollObject.findResult(PathEvent.storyEvent, d100.Roll());
+			ev.fluff = "(story event) " + getStoryEvent(false).fluff;
 		} 
 		evList.add(ev);
 		
@@ -255,7 +256,7 @@ public class PathEvent {
 			ev = VariableRollObject.findResult(PathEvent.preFallEvent, d100.Roll());
 			ev.timeline = "Pre-Fall";
 			if (ev.action == ActionType.getStoryEvent){
-				ev.fluff = "(story event) " + VariableRollObject.findResult(PathEvent.storyEvent, d100.Roll());
+				ev.fluff = "(story event) " + getStoryEvent(false).fluff;
 			}
 			evList.add(ev);
 		} 
@@ -269,8 +270,9 @@ public class PathEvent {
 		ev.timeline = "Fall";
 		evList.add(ev);
 		if (ev.action == ActionType.getStoryEvent){
-			Die d100 = new Die(100);
-			ev = new PathEvent(VariableRollObject.findResult(PathEvent.storyEvent, d100.Roll()), ActionType.noAction, "");
+			//Die d100 = new Die(100);
+			ev = getStoryEvent(false); 
+			//new PathEvent(VariableRollObject.findResult(PathEvent.storyEvent, d100.Roll()), ActionType.noAction, "");
 			ev.timeline = "Fall Story";
 			evList.add(ev);
 		} 
@@ -296,6 +298,17 @@ public class PathEvent {
 		return ev;
 	}
 	
+	
+	public static PathEvent getStoryEvent(boolean isPostFall) {
+		Die d100 = new Die(100);
+		PathEvent ev;
+		do{
+			ev = VariableRollObject.findResult(PathEvent.storyEvent, d100.Roll());			
+		} while (!(isPostFall || (!isPostFall && ev.label.equals("Any"))));
+		ev.timeline = "Story";
+		return ev;
+	}
+	
 	@Override
 	public String toString() {
 		String prettyStr = this.timeline + " Event: " + this.fluff;
@@ -310,7 +323,7 @@ public class PathEvent {
 	
 	static final protected ArrayList<VariableRollObject<PathEvent>> backgroundEvent   = new ArrayList<VariableRollObject<PathEvent>>(40);
 	static final protected ArrayList<VariableRollObject<PathEvent>> preFallEvent      = new ArrayList<VariableRollObject<PathEvent>>(40);
-	static final protected ArrayList<VariableRollObject<String>>    storyEvent        = new ArrayList<VariableRollObject<String>>(30);
+	static final protected ArrayList<VariableRollObject<PathEvent>> storyEvent        = new ArrayList<VariableRollObject<PathEvent>>(30);
 	static final protected ArrayList<VariableRollObject<PathEvent>> fallEvent         = new ArrayList<VariableRollObject<PathEvent>>(40);
 	static final protected ArrayList<VariableRollObject<PathEvent>> postFallEvent     = new ArrayList<VariableRollObject<PathEvent>>(80);
 	static final protected ArrayList<VariableRollObject<PathEvent>> gatecrashingEvent = new ArrayList<VariableRollObject<PathEvent>>(20);
@@ -489,56 +502,112 @@ public class PathEvent {
 		preFallEvent.add(new VariableRollObject<PathEvent>(99, 100, 
 				new PathEvent("You make some life decisions that prove prescient after the Fall.", ActionType.modifyCredits, 20000)));
 
-		storyEvent.add(new VariableRollObject<String>(1,  2,  "After a long stretch of bad, you hit bottom. No way left to go but up."));
-		storyEvent.add(new VariableRollObject<String>(3,  4,  "You participate as a test subject in a research project. You suffer no ill effects … that you can tell."));
-		storyEvent.add(new VariableRollObject<String>(5,  6,  "A prominent journalist befriends you as a source and occasional confidante."));
-		storyEvent.add(new VariableRollObject<String>(7,  8,  "You hear from an unknown source that Oversight has taken an interest in your affairs."));
-		storyEvent.add(new VariableRollObject<String>(9,  10, "You have an unfortunate run-in with Jovian Republic troops, but manage to extricate yourself."));
-		storyEvent.add(new VariableRollObject<String>(11, 12, "After years, you finally get a chance to inflict revenge on someone. Do you take it or walk away?"));
-		storyEvent.add(new VariableRollObject<String>(13, 14, "You witness/survive a major disaster, such as a habitat failure, ship collision, terrorist attack, or a freak but deadly accident."));
-		storyEvent.add(new VariableRollObject<String>(15, 16, "Circumstances force you to move from one end of the solar system to the other."));
-		storyEvent.add(new VariableRollObject<String>(17, 18, "Your habitat goes through a regime change. Which side are you on?"));
-		storyEvent.add(new VariableRollObject<String>(19, 20, "You are falsely accused of a crime but then cleared."));
-		storyEvent.add(new VariableRollObject<String>(21, 22, "You develop a long-term rival. The relationship is complex and non-dangerous, but it does occasionally interfere or consume your	attention."));
-		storyEvent.add(new VariableRollObject<String>(23, 24, "You develop a long-term life-partner relationship."));
-		storyEvent.add(new VariableRollObject<String>(25, 26, "You suffer through the failure of a major long-term relationship."));
-		storyEvent.add(new VariableRollObject<String>(27, 28, "You enter into a convenience-based contract-defined romantic relationship."));
-		storyEvent.add(new VariableRollObject<String>(29, 30, "You develop an ongoing polyamorous relationship with a group of friends."));
-		storyEvent.add(new VariableRollObject<String>(31, 32, "You are pursued by an irritating but (mostly) harmless suitor/stalker."));
-		storyEvent.add(new VariableRollObject<String>(33, 34, "You are recruited to secretly help some faction. Randomly determine that faction from the Factions table."));
-		storyEvent.add(new VariableRollObject<String>(35, 36, "You are re-united with a lover/relative/friend thought lost during the Fall."));
-		storyEvent.add(new VariableRollObject<String>(37, 38, "Political upheaval in your local habitat/polity throws your life into turmoil."));
-		storyEvent.add(new VariableRollObject<String>(39, 40, "You are the only survivor of a deadly accident on board a ship or small hab, which raises some suspicion …"));
-		storyEvent.add(new VariableRollObject<String>(41, 42, "Your life has been blissfully serene and untroubled. Your friends may secretly hate you."));
-		storyEvent.add(new VariableRollObject<String>(43, 44, "You find out that one or both of your parents weren't really your parents."));
-		storyEvent.add(new VariableRollObject<String>(45, 46, "You pursue a period of self-isolation and introspection."));
-		storyEvent.add(new VariableRollObject<String>(47, 48, "You catch an authority figure doing something illicit, but you don't have the means to prove it."));
-		storyEvent.add(new VariableRollObject<String>(49, 50, "You take a sabbatical with the Solarians, ringers, or other space-faring clade."));
-		storyEvent.add(new VariableRollObject<String>(51, 52, "You have an affair."));
-		storyEvent.add(new VariableRollObject<String>(53, 54, "You are privileged enough to meet a Factor."));
-		storyEvent.add(new VariableRollObject<String>(55, 56, "You discover an unknown and intriguing or devastating secret about your family's past."));
-		storyEvent.add(new VariableRollObject<String>(57, 58, "An unfortunate accident leaves you stuck in a healing vat for a couple of weeks."));
-		storyEvent.add(new VariableRollObject<String>(59, 60, "While traveling by spacecraft, a malfunction takes you months off course."));
-		storyEvent.add(new VariableRollObject<String>(61, 62, "You use someone to get ahead."));
-		storyEvent.add(new VariableRollObject<String>(63, 64, "Someone uses you to get ahead."));
-		storyEvent.add(new VariableRollObject<String>(65, 66, "You unexpectedly make a close friend with someone from a rival or even hostile faction."));
-		storyEvent.add(new VariableRollObject<String>(67, 68, "You have a falling out with a formerly close friend."));
-		storyEvent.add(new VariableRollObject<String>(69, 70, "You are forced into a thankless position of heavy responsibility."));
-		storyEvent.add(new VariableRollObject<String>(71, 72, "Facing unwanted responsibilities, you pack up and move on."));
-		storyEvent.add(new VariableRollObject<String>(73, 74, "You are persecuted for your nature or beliefs."));
-		storyEvent.add(new VariableRollObject<String>(75, 76, "You finalize a particularly good research paper, work of art commercial enterprise, or similar achievement."));
-		storyEvent.add(new VariableRollObject<String>(77, 78, "Someone close to you opts for a real, final death."));
-		storyEvent.add(new VariableRollObject<String>(79, 80, "You discover a new subculture to embed yourself in."));
-		storyEvent.add(new VariableRollObject<String>(81, 82, "You befriend a brinker with some interesting ideas and unbelievable stories. Well, almost unbelievable."));
-		storyEvent.add(new VariableRollObject<String>(83, 84, "You find repeat evidence that someone has you under close surveillance—but why?"));
-		storyEvent.add(new VariableRollObject<String>(85, 86, "You are fairly certain that your new friend is secretly a singularity seeker."));
-		storyEvent.add(new VariableRollObject<String>(87, 88, "You come across an interesting surveillance blind-spot in your local habitat."));
-		storyEvent.add(new VariableRollObject<String>(89, 90, "A string of disappearances in your habitat has everyone on edge."));
-		storyEvent.add(new VariableRollObject<String>(91, 92, "Someone you know has come across some disturbing information on a powerful entity, and they are considering blowing the whistle."));
-		storyEvent.add(new VariableRollObject<String>(93, 94, "You don't have what it takes, and your current job/prospect ends in a washout."));
-		storyEvent.add(new VariableRollObject<String>(95, 96, "Your inquisitive nature leads you to discover a secret that could get you into trouble."));
-		storyEvent.add(new VariableRollObject<String>(97, 98, "You receive a wake-up call that challenges your current priorities."));
-		storyEvent.add(new VariableRollObject<String>(99, 100, "Your current job/pursuits take you somewhere dangerous."));
+		storyEvent.add(new VariableRollObject<PathEvent>(1,  2,  
+				new PathEvent("After a long stretch of bad, you hit bottom. No way left to go but up.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(3,  4,  
+				new PathEvent("You participate as a test subject in a research project. You suffer no ill effects … that you can tell.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(5,  6,  
+				new PathEvent("A prominent journalist befriends you as a source and occasional confidante.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(7,  8,  
+				new PathEvent("You hear from an unknown source that Oversight has taken an interest in your affairs.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(9,  10, 
+				new PathEvent("You have an unfortunate run-in with Jovian Republic troops, but manage to extricate yourself.", ActionType.noAction, "Post-Fall Only")));
+		storyEvent.add(new VariableRollObject<PathEvent>(11, 12, 
+				new PathEvent("After years, you finally get a chance to inflict revenge on someone. Do you take it or walk away?", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(13, 14, 
+				new PathEvent("You witness/survive a major disaster, such as a habitat failure, "
+						+ "ship collision, terrorist attack, or a freak but deadly accident.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(15, 16, 
+				new PathEvent("Circumstances force you to move from one end of the solar system to the other.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(17, 18, 
+				new PathEvent("Your habitat goes through a regime change. Which side are you on?", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(19, 20, 
+				new PathEvent("You are falsely accused of a crime but then cleared.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(21, 22, 
+				new PathEvent("You develop a long-term rival. The relationship is complex and non-dangerous, "
+						+ "but it does occasionally interfere or consume your attention.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(23, 24,
+				new PathEvent("You develop a long-term life-partner relationship.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(25, 26, 
+				new PathEvent("You suffer through the failure of a major long-term relationship.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(27, 28, 
+				new PathEvent("You enter into a convenience-based contract-defined romantic relationship.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(29, 30, 
+				new PathEvent("You develop an ongoing polyamorous relationship with a group of friends.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(31, 32, 
+				new PathEvent("You are pursued by an irritating but (mostly) harmless suitor/stalker.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(33, 34, 
+				new PathEvent("You are recruited to secretly help some faction. Randomly determine that faction from the "
+						+ "Factions table.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(35, 36, 
+				new PathEvent("You are re-united with a lover/relative/friend thought lost during the Fall.", ActionType.noAction, "Post-Fall Only")));
+		storyEvent.add(new VariableRollObject<PathEvent>(37, 38, 
+				new PathEvent("Political upheaval in your local habitat/polity throws your life into turmoil.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(39, 40, 
+				new PathEvent("You are the only survivor of a deadly accident on board a ship or small hab, "
+						+ "which raises some suspicion …", ActionType.noAction, "Post-Fall Only")));
+		storyEvent.add(new VariableRollObject<PathEvent>(41, 42, 
+				new PathEvent("Your life has been blissfully serene and untroubled. Your friends may secretly hate you.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(43, 44, 
+				new PathEvent("You find out that one or both of your parents weren't really your parents.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(45, 46, 
+				new PathEvent("You pursue a period of self-isolation and introspection.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(47, 48, 
+				new PathEvent("You catch an authority figure doing something illicit, but you don't have the means to prove it.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(49, 50, 
+				new PathEvent("You take a sabbatical with the Solarians, ringers, or other space-faring clade.", ActionType.noAction, "Post-Fall Only")));
+		storyEvent.add(new VariableRollObject<PathEvent>(51, 52, 
+				new PathEvent("You have an affair.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(53, 54, 
+				new PathEvent("You are privileged enough to meet a Factor.", ActionType.noAction, "Post-Fall Only")));
+		storyEvent.add(new VariableRollObject<PathEvent>(55, 56, 
+				new PathEvent("You discover an unknown and intriguing or devastating secret about your family's past.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(57, 58, 
+				new PathEvent("An unfortunate accident leaves you stuck in a healing vat for a couple of weeks.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(59, 60, 
+				new PathEvent("While traveling by spacecraft, a malfunction takes you months off course.", ActionType.noAction, "Post-Fall Only")));
+		storyEvent.add(new VariableRollObject<PathEvent>(61, 62, 
+				new PathEvent("You use someone to get ahead.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(63, 64, 
+				new PathEvent("Someone uses you to get ahead.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(65, 66, 
+				new PathEvent("You unexpectedly make a close friend with someone from a rival or even hostile faction.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(67, 68, 
+				new PathEvent("You have a falling out with a formerly close friend.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(69, 70, 
+				new PathEvent("You are forced into a thankless position of heavy responsibility.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(71, 72, 
+				new PathEvent("Facing unwanted responsibilities, you pack up and move on.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(73, 74, 
+				new PathEvent("You are persecuted for your nature or beliefs.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(75, 76, 
+				new PathEvent("You finalize a particularly good research paper, work of art commercial enterprise, "
+						+ "or similar achievement.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(77, 78, 
+				new PathEvent("Someone close to you opts for a real, final death.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(79, 80, 
+				new PathEvent("You discover a new subculture to embed yourself in.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(81, 82, 
+				new PathEvent("You befriend a brinker with some interesting ideas and unbelievable stories. Well, almost unbelievable.", ActionType.noAction, "Post-Fall Only")));
+		storyEvent.add(new VariableRollObject<PathEvent>(83, 84, 
+				new PathEvent("You find repeat evidence that someone has you under close surveillance—but why?", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(85, 86, 
+				new PathEvent("You are fairly certain that your new friend is secretly a singularity seeker.", ActionType.noAction, "Post-Fall Only")));
+		storyEvent.add(new VariableRollObject<PathEvent>(87, 88, 
+				new PathEvent("You come across an interesting surveillance blind-spot in your local habitat.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(89, 90, 
+				new PathEvent("A string of disappearances in your habitat has everyone on edge.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(91, 92, 
+				new PathEvent("Someone you know has come across some disturbing information on a powerful entity, "
+						+ "and they are considering blowing the whistle.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(93, 94, 
+				new PathEvent("You don't have what it takes, and your current job/prospect ends in a washout.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(95, 96, 
+				new PathEvent("Your inquisitive nature leads you to discover a secret that could get you into trouble.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(97, 98, 
+				new PathEvent("You receive a wake-up call that challenges your current priorities.", ActionType.noAction, "Any")));
+		storyEvent.add(new VariableRollObject<PathEvent>(99, 100, 
+				new PathEvent("Your current job/pursuits take you somewhere dangerous.", ActionType.noAction, "Any")));
 	
 	
 		fallEvent.add(new VariableRollObject<PathEvent>(1,  10, 
@@ -974,6 +1043,7 @@ public class PathEvent {
 						+ "They solve the problem, but you fail to make the delivery.", ActionType.addTrait, "Enemy")));
 		
 	}
+
 
 
 

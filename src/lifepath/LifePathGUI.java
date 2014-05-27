@@ -47,11 +47,15 @@ public class LifePathGUI extends JFrame implements ActionListener,
 	private JButton   writeToFileButton;
 	private JTextArea display;
 	private LifePath  lifePath;
+	private JCheckBox getFirewallEvent;
+	private JCheckBox getStoryEvent;
 	private JPanel    optionsPanel;
 	private JCheckBox chooseSkillsButton;
 	private JCheckBox getRandomMotivationsButton;
 	private boolean   randomMotivations = false;
 	private boolean   chooseSkills      = false;
+	private boolean   firewallEvent     = true;
+	private boolean   storyEvent        = true;
 	private JList<String>     backgroundSelect;
 	private ArrayList<String> backgrounds; 
 	private JList<String>     factionSelect;
@@ -72,8 +76,17 @@ public class LifePathGUI extends JFrame implements ActionListener,
 		this.optionsPanel = new JPanel();
 		this.optionsPanel.setLayout(new BoxLayout(this.optionsPanel, BoxLayout.PAGE_AXIS));
 		
+		this.getFirewallEvent = new JCheckBox("Get Firewall Event");
+		this.getFirewallEvent.addItemListener(this);
+		this.getFirewallEvent.setSelected(true);
+		this.optionsPanel.add(this.getFirewallEvent);	
+		
+		this.getStoryEvent = new JCheckBox("Get Life Event");
+		this.getStoryEvent.addItemListener(this);
+		this.getStoryEvent.setSelected(true);
+		this.optionsPanel.add(this.getStoryEvent);
+		
 		this.getRandomMotivationsButton = new JCheckBox("Randomize motivations");
-		//this.getRandomMotivationsButton.setSelected(true);
 		this.getRandomMotivationsButton.addItemListener(this);				
 		this.optionsPanel.add(this.getRandomMotivationsButton);
 				
@@ -108,7 +121,7 @@ public class LifePathGUI extends JFrame implements ActionListener,
 		bgScroller.setPreferredSize(new Dimension(150, 237));
 		this.optionsPanel.add(bgScroller);
 
-		//this.selectFocus; // TODO: NYI
+		//this.selectFocus; // TODO: Not sure if I'm going to implement this.
 
 		this.optionsPanel.add(new JLabel(" "));
 		this.optionsPanel.add(new JLabel("Allowed Factions"));
@@ -146,7 +159,7 @@ public class LifePathGUI extends JFrame implements ActionListener,
 		this.mainPanel.add(this.clearTextButton);
 		
 		this.writeToFileButton = new JButton("Write to File");
-		this.writeToFileButton.addActionListener(this); 
+		this.writeToFileButton.addActionListener(this); // TODO: implement this
 		
 		this.display = new JTextArea();
 		this.display.setLineWrap(true);
@@ -197,10 +210,10 @@ public class LifePathGUI extends JFrame implements ActionListener,
 		layout.putConstraint(SpringLayout.SOUTH, this.mainPanel, 5, 
 				SpringLayout.SOUTH, scrollbar);
 		
-		this.mainPanel.setSize(800, 662);
+		this.mainPanel.setSize(800, 710);
 		this.add(this.mainPanel);
 		
-		this.setSize(800, 662);
+		this.setSize(800, 710);
 		this.setLocation(50, 50);
 		//this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
@@ -238,8 +251,8 @@ public class LifePathGUI extends JFrame implements ActionListener,
 		
 		if (source == this.newCharacterButton){
 			this.lifePath = new LifePath();
-			this.lifePath.setUserOptions(this.randomMotivations, this.chooseSkills, 
-					this.backgrounds, this.factions); //TODO: this.focuses);
+			this.lifePath.setUserOptions(this.firewallEvent, this.storyEvent, this.randomMotivations, 
+					this.chooseSkills, this.backgrounds, this.factions);
 			this.lifePath.generateLifePath();
 			this.display.append(this.lifePath.getText());
 			this.display.setCaretPosition(this.display.getDocument().getLength());
@@ -266,7 +279,20 @@ public class LifePathGUI extends JFrame implements ActionListener,
 			} else {
 				this.randomMotivations = true;
 			}
+		} else if (source == this.getFirewallEvent){
+			if (event.getStateChange() == ItemEvent.DESELECTED){
+				this.firewallEvent = false;
+			} else {
+				this.firewallEvent = true;
+			}
+		} else if (source == this.getStoryEvent){
+			if (event.getStateChange() == ItemEvent.DESELECTED){
+				this.storyEvent = false;
+			} else {
+				this.storyEvent = true;
+			}
 		}
+		
 	}
 	
 	@Override

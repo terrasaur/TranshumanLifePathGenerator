@@ -57,6 +57,8 @@ public class LifePath {
 	private boolean getRandomMotivations = false;
 	private ArrayList<String> allowedBackgrounds;
 	private ArrayList<String> allowedFactions;
+	private boolean getFirewallEvent = true;
+	private boolean getStoryEvent = true;
 
 	
 	public LifePath(String name) {
@@ -94,11 +96,16 @@ public class LifePath {
 	 * Sets GUI-determined variables
 	 * @param randomMotivations - if the sim should pick random motivations
 	 * @param chooseSkills  - whether or not the sim should choose random skills
+	 * @param chooseSkills 
+	 * @param randomMotivations 
 	 * @param backgrounds - allowed backgrounds
 	 * @param factions - allowed factions
 	 */
-	public void setUserOptions(boolean randomMotivations, boolean chooseSkills, 
+	public void setUserOptions(boolean getFirewallEvent, boolean getStoryEvent, 
+			boolean randomMotivations, boolean chooseSkills, 
 			ArrayList<String> backgrounds, ArrayList<String> factions) {
+		this.getFirewallEvent = getFirewallEvent;
+		this.getStoryEvent = getStoryEvent;
 		this.chooseSkills = chooseSkills;
 		this.getRandomMotivations  = randomMotivations;
 		this.allowedBackgrounds = backgrounds;
@@ -160,8 +167,11 @@ public class LifePath {
 		this.todo.addAll(LifePathPackage.applyAllPackages(this.character, this.packages, this.chooseSkills));
 		
 		// Resolve post-life path stuff
-		this.character.setStartingCredits(LifePathCharts.getStartingCredits(d10.Roll(), d10.Roll()));		
-		this.eventList.add(PathEvent.getFirewallEvent(d100.Roll()));
+		this.character.setStartingCredits(LifePathCharts.getStartingCredits(d10.Roll(), d10.Roll()));
+		if (this.getFirewallEvent)
+			this.eventList.add(PathEvent.getFirewallEvent(d100.Roll()));
+		if (this.getStoryEvent)
+			this.eventList.add(PathEvent.getStoryEvent(true));
 
 		// This should add all the path event crap to the character
 		for (PathEvent e: this.eventList){
