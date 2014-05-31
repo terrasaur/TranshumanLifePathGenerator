@@ -1,3 +1,6 @@
 /bin
 /.svn
 /.git
+/.project
+/.classpath
+/.settings
