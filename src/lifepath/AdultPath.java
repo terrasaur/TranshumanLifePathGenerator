@@ -65,6 +65,12 @@ public class AdultPath {
 	PathEvent fallEvent;
 	protected ArrayList<String> allowedFactions;
 	
+	/**
+	 * This gets the pre-Fall focus and faction packages for a character, if
+	 * that character has a pre-Fall life. If you have a pre-Fall path, you 
+	 * do not need to give getPostfallPath a focus later on
+	 * @param focus - the starting focus for the character
+	 */
 	public void getAdultPrefallPath(AdultFocus focus){
 		this.preFallPath = "";
 		Die d10 = new Die (10);
@@ -77,7 +83,7 @@ public class AdultPath {
 			this.preFallPackage = this.getFocusPackage(focus, d10.Roll(), 1);
 			this.preFallPath = focus.name() + " Focus: " + this.preFallPackage.label;
 		} else if (roll >= 6) {
-			this.preFallPackage = this.getCustomizationPackage(true, 1);
+			this.preFallPackage = this.getCustomizationPackage(true);
 			this.preFallPath = "Customization Focus";
 			this.focus = AdultFocus.Customization;
 			this.pathHistory += "  Decided to customize instead.\n";
@@ -102,15 +108,20 @@ public class AdultPath {
 	}
 
 	/**
-	 * Gets a customization package from the list
-	 * 
+	 * Gets a customization package from the list. 	 
 	 * @param preFall if this is a pre-Fall customization package
-	 * @param hasPsi if the character has a psi trait already
+	 * @return selected customization package 
 	 */
-	private LifePathPackage getCustomizationPackage(boolean preFall, int pp) {
-		return this.getCustomizationPackage(preFall, false, pp);		
+	private LifePathPackage getCustomizationPackage(boolean preFall) {
+		return this.getCustomizationPackage(preFall, false);		
 	}
-	private LifePathPackage getCustomizationPackage(boolean preFall, boolean isAsync, int pp) {
+	/**
+	 * Gets a customization package from the list. 
+	 * @param preFall if this is a pre-Fall customization package
+	 * @param isAsync Optional, defaults to false
+	 * @return selected customization package 
+	 */
+	private LifePathPackage getCustomizationPackage(boolean preFall, boolean isAsync) {
 		Die d100 = new Die(100);
 		int roll = d100.Roll();
 		
@@ -123,7 +134,8 @@ public class AdultPath {
 			// rolled an async trait
 			this.isAsync = true;
 		}
-		return new CustomizationPackage(VariableRollObject.findResult(customizationPackages, roll), pp);
+		// Customization packages are always 1 pp
+		return new CustomizationPackage(ChartEntry.findResult(customizationPackages, roll), 1);
 	}
 
 	
@@ -436,7 +448,7 @@ public class AdultPath {
 					p = this.getFactionPackage(faction, d10.Roll(), 1, isUplift);
 				} else {
 					// new customization package
-					p = this.getCustomizationPackage(false, this.isAsync, 1);
+					p = this.getCustomizationPackage(false, this.isAsync);
 					this.pathHistory += "  Decided to customize.\n";
 				}
 			} while (this.addPackage(list, p) == false); // already exists
@@ -459,56 +471,56 @@ public class AdultPath {
 		}
 	}
 	
-
-	static final protected ArrayList<VariableRollObject<CustomizationPackage.List>> customizationPackages = 
-	new ArrayList<VariableRollObject<CustomizationPackage.List>>(22);
+	static final protected ArrayList<ChartEntry<CustomizationPackage.List>> customizationPackages = 
+	new ArrayList<ChartEntry<CustomizationPackage.List>>(22);
 	static 	{
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(1,  4,  
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(1,  4,  
 				CustomizationPackage.List.Artist));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(5,  8,  
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(5,  8,  
 				CustomizationPackage.List.Async));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(9,  12, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(9,  12, 
 				CustomizationPackage.List.AsyncAdept));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(13, 16, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(13, 16, 
 				CustomizationPackage.List.Athletics));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(17, 20, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(17, 20, 
 				CustomizationPackage.List.ComputerTraining));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(21, 24, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(21, 24, 
 				CustomizationPackage.List.Connected));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(25, 28, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(25, 28, 
 				CustomizationPackage.List.Gearhead));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(29, 32, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(29, 32, 
 				CustomizationPackage.List.HeavyWeapons));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(33, 39, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(33, 39, 
 				CustomizationPackage.List.JackOfAllTrades));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(40, 46, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(40, 46, 
 				CustomizationPackage.List.Lucky));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(47, 50, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(47, 50, 
 				CustomizationPackage.List.MartialArts));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(51, 54, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(51, 54, 
 				CustomizationPackage.List.Mentalist));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(55, 61, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(55, 61, 
 				CustomizationPackage.List.Networker));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(62, 65, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(62, 65, 
 				CustomizationPackage.List.Paramedic));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(66, 69, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(66, 69, 
 				CustomizationPackage.List.Slacker));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(70, 73, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(70, 73, 
 				CustomizationPackage.List.Sneaker));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(74, 77, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(74, 77, 
 				CustomizationPackage.List.SocialButterfly));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(78, 81, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(78, 81, 
 				CustomizationPackage.List.Spacer));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(82, 85, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(82, 85, 
 				CustomizationPackage.List.Student));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(86, 89, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(86, 89, 
 				CustomizationPackage.List.SurvivalTraining));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(90, 93, 
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(90, 93, 
 				CustomizationPackage.List.TechTraining));
-		customizationPackages.add(new VariableRollObject<CustomizationPackage.List>(94, 100,
+		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(94, 100,
 				CustomizationPackage.List.WeaponsTraining));
 	}
 	
+	// Because I wanted to be fancy and use reflection, I have to do all these @SuppressWarnings.
 	@SuppressWarnings("unused")
 	private FocusPackage.List[] autonomistFocusArray = new FocusPackage.List[]{ FocusPackage.List.Academic, 
 		 FocusPackage.List.Activist, FocusPackage.List.BotJammer, FocusPackage.List.CovertOps, 

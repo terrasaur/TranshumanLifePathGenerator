@@ -29,6 +29,11 @@ public class CustomizationPackage extends LifePathPackage {
 		this.getPackageContents();
 	}
 	
+	/**
+	 * List of all factions. Each package has a list enum containing its list objects.
+	 * When creating a package, the class will look up the package in this list.
+	 * @author terrasaur
+	 */
 	public enum List {
 		Artist          ("Artist"),
 		Async           ("Async"),
@@ -79,7 +84,11 @@ public class CustomizationPackage extends LifePathPackage {
 		return ret.substring(0, ret.length()-1);
 	}
 
-	
+	/**
+	 * Looks up a package by the label string. If it doesn't exist, returns null.
+	 * @param label A string of the package name
+	 * @return The package's list name by enum value
+	 */
 	public static List getPackageByLabel(String label) {
 		for (List l : List.values()){
 			if (l.equals(label))
@@ -88,7 +97,10 @@ public class CustomizationPackage extends LifePathPackage {
 		return null;
 	}
 
-	
+
+	/**
+	 * Assigns package contents.
+	 */
 	private void getPackageContents() {
 		switch (this.packageName){
 		case Artist:

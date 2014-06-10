@@ -2,14 +2,13 @@ package lifepath;
 
 import character.EPCharacter;
 import character.Skill;
+import dice.Die;
 
 /**
  * This is one of the four different package types. Everything is hard-coded.
- * Because I don't want to mess around with databases. I know, I know, I 
- * should just learn them. But alas.
+ * I know, I know... I should just learn databases.
  * 
  * @author terrasaur
- *
  */
 public class BackgroundPackage extends LifePathPackage {
 	List packageName;
@@ -36,6 +35,11 @@ public class BackgroundPackage extends LifePathPackage {
 		this.getPackageContents();
 	}
 	
+	/**
+	 * List of all factions. Each package has a list enum containing its list objects.
+	 * When creating a package, the class will look up the package in this list.
+	 * @author terrasaur
+	 */
 	public enum List {
 		ColonistCommandStaff   ("Colonist: Command Staff"),
 		ColonistFlightStaff    ("Colonist: Flight Staff"),
@@ -107,6 +111,11 @@ public class BackgroundPackage extends LifePathPackage {
 		return null;
 	}
 	
+	/**
+	 * Applies a package to a character. Overridden to add the background package 
+	 * to the character's faction. If you have multiple faction packages, this will 
+	 * just append your backgrounds onto one another. 
+	 */
 	protected void applyToCharacter(EPCharacter c) {
 		super.applyToCharacter(c);
 		c.setBackground(this.packageName.text);
@@ -120,6 +129,7 @@ public class BackgroundPackage extends LifePathPackage {
 		
 		// All background packages give +1 moxie
 		this.bonusList.add(new StatBonus("MOX", 1)); 
+		Die d10 = new Die(10);
 		
 		//this\.choiceList\.add\("Add one (\w+) skill of your choice at (\d\d)"\);
 		//this\.skillList\.add\(new Skill\("$1", "Choice", $2\)\);
@@ -137,7 +147,13 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Profession", "Administration", 40));
 				this.skillList.add(new Skill("Protocol", 50));
 				this.skillList.add(new Skill("Academics", "Choice", 30)); 
-				this.choiceList.add("Add Free Fall or Free Running at 35");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 35));
+					else
+						this.skillList.add(new Skill("Free Running", 35));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 35");
 				this.skillList.add(new Skill("Interest", "Choice", 20)); 
 				this.skillList.add(new Skill("Networking", "Choice", 40)); 
 				this.skillList.add(new Skill("Pilot", "Choice", 30)); 
@@ -148,7 +164,13 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Art", "Choice", 40));
 				this.skillList.add(new Skill("Beam Weapons", 30));
 				this.skillList.add(new Skill("Fray", 25));
-				this.choiceList.add("Add Free Fall or Free Running at 35");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 35));
+					else
+						this.skillList.add(new Skill("Free Running", 35));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 35");
 				this.skillList.add(new Skill("Interest", "Choice", 30)); 
 				this.skillList.add(new Skill("Intimidation", 30)); 
 				this.skillList.add(new Skill("Networking", "Choice", 40)); 
@@ -167,7 +189,13 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Pilot", "Spacecraft", 40));
 				this.skillList.add(new Skill("Profession", "Flight Crew", 30));
 			} else if (this.ppCost == 3){
-				this.choiceList.add("Add Academics: Astrophysics or Academics: Engineering at 30");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Academics", "Astrophysics", 30));
+					else
+						this.skillList.add(new Skill("Academics", "Engineering", 30));
+				else
+					this.choiceList.add("Add Academics: Astrophysics or Academics: Engineering at 30");
 				this.skillList.add(new Skill("Free Fall", 40));
 				this.skillList.add(new Skill("Hardware", "Aerospace", 35)); 
 				this.skillList.add(new Skill("Interest", "Choice", 20)); 
@@ -178,7 +206,13 @@ public class BackgroundPackage extends LifePathPackage {
 			} else {
 				this.bonusList.add(new StatBonus("REF", 5));
 				this.bonusList.add(new StatBonus("Choose Rep", 50));
-				this.choiceList.add("Add Academics: Astrophysics or Academics: Engineering at 40");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Academics", "Astrophysics", 40));
+					else
+						this.skillList.add(new Skill("Academics", "Engineering", 40));
+				else
+					this.choiceList.add("Add Academics: Astrophysics or Academics: Engineering at 40");
 				this.skillList.add(new Skill("Fray", 20)); 
 				this.skillList.add(new Skill("Free Fall", 40));
 				this.skillList.add(new Skill("Gunnery", 30)); 
@@ -198,7 +232,13 @@ public class BackgroundPackage extends LifePathPackage {
 			this.suggestedMotivations.add("+Science!");
 			if (this.ppCost == 1){
 				this.skillList.add(new Skill("Academics", "Choice", 40)); 
-				this.choiceList.add("Add Free Fall or Free Running at 15");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 15));
+					else
+						this.skillList.add(new Skill("Free Running", 15));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 15");
 			this.skillList.add(new Skill("Investigation", 30));
 				
 			} else if (this.ppCost == 3) {
@@ -216,7 +256,13 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Academics", "Choice", 50));
 				this.skillList.add(new Skill("Academics", "Choice", 40));
 				this.skillList.add(new Skill("Fray", 25)); 
-				this.choiceList.add("Add Free Fall or Free Running at 30");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 30));
+					else
+						this.skillList.add(new Skill("Free Running", 30));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 30");
 				this.skillList.add(new Skill("Hardware", "Choice", 20));
 				
 				this.skillList.add(new Skill("Interest", "Choice", 30));
@@ -235,11 +281,23 @@ public class BackgroundPackage extends LifePathPackage {
 			this.suggestedMotivations.add("–Autonomists");
 			if (this.ppCost == 1){
 				this.skillList.add(new Skill("Beam Weapons", 40));
-				this.choiceList.add("Add Free Fall or Free Running at 15");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 15));
+					else
+						this.skillList.add(new Skill("Free Running", 15));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 15");
 				this.skillList.add(new Skill("Profession", "Security Ops", 30));
 			} else if (this.ppCost == 3) {
 				this.skillList.add(new Skill("Beam Weapons", 50)); 
-				this.choiceList.add("Add Free Fall or Free Running at 40"); 
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 40));
+					else
+						this.skillList.add(new Skill("Free Running", 40));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 40"); 
 				this.skillList.add(new Skill("Clubs", 35)); 
 				this.skillList.add(new Skill("Interest", "Choice", 30));
 				this.skillList.add(new Skill("Intimidation", 40));
@@ -253,7 +311,13 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Academics", "Choice", 40));
 				this.skillList.add(new Skill("Beam Weapons", 50)); 
 				this.skillList.add(new Skill("Fray", 25)); 
-				this.choiceList.add("Add Free Fall or Free Running at 40");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 40));
+					else
+						this.skillList.add(new Skill("Free Running", 40));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 40");
 				this.skillList.add(new Skill("Clubs", 35)); 
 				this.skillList.add(new Skill("Interest", "Choice", 30));
 				this.skillList.add(new Skill("Intimidation", 40)); 
@@ -269,12 +333,24 @@ public class BackgroundPackage extends LifePathPackage {
 			this.suggestedMotivations.add("+Problem Solving");
 			this.suggestedMotivations.add("+Survival");
 			if (this.ppCost == 1){
-				this.choiceList.add("Add Free Fall or Free Running at 15");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 15));
+					else
+						this.skillList.add(new Skill("Free Running", 15));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 15");
 				this.skillList.add(new Skill("Hardware", "Choice", 40));
 				this.skillList.add(new Skill("Profession", "Choice", 30));
 			} else if (this.ppCost == 3) {
 				this.skillList.add(new Skill("Academics", "Choice", 30));	
-				this.choiceList.add("Add Free Fall or Free Running at 30");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 30));
+					else
+						this.skillList.add(new Skill("Free Running", 30));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 30");
 				this.skillList.add(new Skill("Hardware", "Choice", 50));
 				this.skillList.add(new Skill("Interest", "Choice", 20));
 				this.skillList.add(new Skill("Interfacing", 40)); 
@@ -286,7 +362,13 @@ public class BackgroundPackage extends LifePathPackage {
 				this.bonusList.add(new StatBonus("Choose Rep", 50));
 				this.skillList.add(new Skill("Academics", "Choice", 40));
 				this.skillList.add(new Skill("Fray", 20)); 
-				this.choiceList.add("Add Free Fall or Free Running at 30");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 30));
+					else
+						this.skillList.add(new Skill("Free Running", 30));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 30");
 				this.skillList.add(new Skill("Hardware", "Choice", 50));
 				this.skillList.add(new Skill("Hardware", "Choice", 40));
 				this.skillList.add(new Skill("Interest", "Choice", 30)); 
@@ -304,11 +386,23 @@ public class BackgroundPackage extends LifePathPackage {
 			this.suggestedMotivations.add("+Survival");
 			this.suggestedMotivations.add("+Hard Work");
 			if (this.ppCost == 1){
-				this.choiceList.add("Add Free Fall or Free Running at 15"); 
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 15));
+					else
+						this.skillList.add(new Skill("Free Running", 15));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 15"); 
 				this.skillList.add(new Skill("Profession", "Choice", 30));
 				this.skillList.add(new Skill("Scrounging", 40));
 			} else if (this.ppCost == 3) {
-				this.choiceList.add("Add Free Fall or Free Running at 40");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 40));
+					else
+						this.skillList.add(new Skill("Free Running", 40));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 40");
 				this.skillList.add(new Skill("Hardware", "Choice", 30)); 
 				this.skillList.add(new Skill("Interest", "Choice", 20)); 
 				this.skillList.add(new Skill("Kinetic Weapons", 20)); 
@@ -323,7 +417,13 @@ public class BackgroundPackage extends LifePathPackage {
 				this.bonusList.add(new StatBonus("Choose Rep", 50));
 				this.skillList.add(new Skill("Art", "Choice", 40));
 				this.skillList.add(new Skill("Fray", 25)); 
-				this.choiceList.add("Add Free Fall or Free Running at 40");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Free Fall", 40));
+					else
+						this.skillList.add(new Skill("Free Running", 40));
+				else
+					this.choiceList.add("Add Free Fall or Free Running at 40");
 				this.skillList.add(new Skill("Hardware", "Choice", 30)); 
 				this.skillList.add(new Skill("Interest", "Choice", 30)); 
 				this.skillList.add(new Skill("Kinetic	Weapons", 20)); 
@@ -602,13 +702,25 @@ public class BackgroundPackage extends LifePathPackage {
 			this.suggestedMotivations.add("+Personal Development"); 
 			this.suggestedMotivations.add("+Philanthropy");
 			if (this.ppCost == 1){
-				this.choiceList.add("Add Academics: Psychology or Academics: Sociology at 30"); 				
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Academics", "Psychology", 30));
+					else
+						this.skillList.add(new Skill("Academics", "Sociology", 30));
+				else
+					this.choiceList.add("Add Academics: Psychology or Academics: Sociology at 30"); 				
 				this.skillList.add(new Skill("Interfacing", 40)); 
 				this.skillList.add(new Skill("Kinesics", 35));
 				this.traitList.add("Real World Naiveté");
 				this.traitList.add("Social Stigma (AGI)");
 			} else if (this.ppCost == 3) {
-				this.choiceList.add("Add Academics: Psychology or Academics: Sociology at 40"); 
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Academics", "Psychology", 40));
+					else
+						this.skillList.add(new Skill("Academics", "Sociology", 40));
+				else
+					this.choiceList.add("Add Academics: Psychology or Academics: Sociology at 40"); 
 				this.skillList.add(new Skill("Art", "Digital Art", 20)); 
 				this.skillList.add(new Skill("Impersonation", 25)); 
 				this.skillList.add(new Skill("Interfacing", 50)); 
@@ -622,7 +734,13 @@ public class BackgroundPackage extends LifePathPackage {
 			} else {
 				this.bonusList.add(new StatBonus("SAV", 5));
 				this.bonusList.add(new StatBonus("Choose Rep", 50));
-				this.choiceList.add("Add Academics: Psychology or Academics: Sociology at 40"); 
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Academics", "Psychology", 40));
+					else
+						this.skillList.add(new Skill("Academics", "Sociology", 40));
+				else
+					this.choiceList.add("Add Academics: Psychology or Academics: Sociology at 40"); 
 				this.skillList.add(new Skill("Art", "Digital Art", 40));
 				this.skillList.add(new Skill("Impersonation", 30)); 
 				this.skillList.add(new Skill("Infosec", 30)); 

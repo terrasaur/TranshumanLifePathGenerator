@@ -2,6 +2,7 @@ package lifepath;
 
 import character.EPCharacter;
 import character.Skill;
+import dice.Die;
 
 
 public class FactionPackage extends LifePathPackage {
@@ -30,6 +31,14 @@ public class FactionPackage extends LifePathPackage {
 		this.getPackageContents();
 	}
 	
+	/**
+	 * List of all factions. Each package has a list enum containing its list objects.
+	 * When creating a package, the class will look up the package in this list.
+	 * If it can't find it, it will throw an error (or rather just complain a bit, 
+	 * since I don't have realsies error handling like a chump)
+	 * @author terrasaur
+	 *
+	 */
 	public enum List {
 		Anarchist        ("Anarchist"),
 		Argonaut         ("Argonaut"),
@@ -90,6 +99,14 @@ public class FactionPackage extends LifePathPackage {
 		return ret.substring(0, ret.length()-1);
 	}
 
+	/**
+	 * Looks up a package by the label string. If it doesn't exist, returns null.
+	 * This is public because of special conditions with the Fall event changing the 
+	 * factions to a specific package. I am sure this could be handled in a more 
+	 * graceful manner.
+	 * @param label A string of the package name
+	 * @return The package's list name by enum value
+	 */
 	public static List getPackageByLabel(String label) {
 		for (List l : List.values()){
 			if (l.equals(label))
@@ -98,6 +115,13 @@ public class FactionPackage extends LifePathPackage {
 		return null;
 	}
 	
+	/**
+	 * Applies a package to a character. Overridden to add the faction package 
+	 * to the character's faction.
+	 * 
+	 * If you have multiple faction packages, this will just append your factions
+	 * onto one another. Congrats on that Jovian-Singularity Seeker-Anarchist
+	 */
 	protected void applyToCharacter(EPCharacter c) {
 		super.applyToCharacter(c);
 		c.setFaction(this.packageName.text);
@@ -105,9 +129,12 @@ public class FactionPackage extends LifePathPackage {
 
 	
 	/**
-	 * Sets the contents for all Faction packages upon creation
+	 * Sets the contents for all Faction packages upon creation. This is a 
+	 * massive switch and hand-coded because I am afraid of databases. But I did
+	 * use regular expressions at least. They are in the LifePathPackage object.
 	 */
 	private void getPackageContents() {
+		Die d10 = new Die(10);
 		switch(this.packageName){
 		case Anarchist:
 			this.suggestedMotivations.add("+Morphological Freedom"); 
@@ -364,7 +391,13 @@ public class FactionPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Academics", "Military Science", 30)); 
 				this.skillList.add(new Skill("Intimidation", 25)); 
 				this.skillList.add(new Skill("Kinetic Weapons", 40)); 
-				this.choiceList.add("Add Language: English or Language: Spanish at 40");
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Language", "English", 40));
+					else
+						this.skillList.add(new Skill("Language", "Spanish", 40));
+				else
+					this.choiceList.add("Add Language: English or Language: Spanish at 40");
 				this.skillList.add(new Skill("Networking", "Hypercorps", 40));
 				this.skillList.add(new Skill("Profession", "Military Ops", 30));
 				this.skillList.add(new Skill("Seeker Weapons", 40));
@@ -444,7 +477,13 @@ public class FactionPackage extends LifePathPackage {
 			this.suggestedMotivations.add("+Exploration");
 			this.suggestedMotivations.add("+Technoprogressivism");
 			if (this.ppCost == 1){
-				this.choiceList.add("Add Academics: Ecology or Academics: Nanotechnology at 30"); 
+				if (this.getRandomSkills)
+					if (d10.Roll() > 5)
+						this.skillList.add(new Skill("Academics", "Ecology", 30));
+					else
+						this.skillList.add(new Skill("Academics", "Nanotechnology", 30));
+				else
+					this.choiceList.add("Add Academics: Ecology or Academics: Nanotechnology at 30"); 
 				this.skillList.add(new Skill("Freerunning", 30)); 
 			this.skillList.add(new Skill("Programming", 40));
 			} else if (this.ppCost == 3) {

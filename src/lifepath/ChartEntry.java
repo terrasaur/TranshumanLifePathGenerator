@@ -2,7 +2,7 @@ package lifepath;
 
 import java.util.ArrayList;
 
-class VariableRollObject<T> {
+class ChartEntry<T> {
 
 	T object;
 	Integer rollMin;
@@ -15,19 +15,19 @@ class VariableRollObject<T> {
 	 * @param rollMin minimum label that must be rolled to achieve this result
 	 * @param rollMax maximum label
 	 */
-	public VariableRollObject(T label, Integer rollMin, Integer rollMax) {
+	public ChartEntry(T label, Integer rollMin, Integer rollMax) {
 		super();
 		this.object = label;
 		this.rollMin = rollMin;
 		this.rollMax = rollMax;
 	}
-	public VariableRollObject(Integer rollMin, Integer rollMax, T label) {
+	public ChartEntry(Integer rollMin, Integer rollMax, T label) {
 		super();
 		this.object = label;
 		this.rollMin = rollMin;
 		this.rollMax = rollMax;
 	}
-	public VariableRollObject(Integer roll, T label) {
+	public ChartEntry(Integer roll, T label) {
 		super();
 		this.object = label;
 		this.rollMin = roll;
@@ -52,7 +52,7 @@ class VariableRollObject<T> {
 		return this.rollMin + "-" + this.rollMax + ": " + this.object.toString();
 	}
 	
-	static <T> T findResult(VariableRollObject<T>[] chart, Integer roll){
+	static <T> T findResult(ChartEntry<T>[] chart, Integer roll){
 		for (int i = 0; i < chart.length; i++){
 			if (chart[i] == null){
 				return null;
@@ -63,7 +63,7 @@ class VariableRollObject<T> {
 		}
 		return null;		
 	}
-	public static <T> T findResult(ArrayList<VariableRollObject<T>> chart, Integer roll) {
+	public static <T> T findResult(ArrayList<ChartEntry<T>> chart, Integer roll) {
 		for (int i = 0; i < chart.size(); i++){
 			if (chart.get(i).equals(roll)){
 				return chart.get(i).object;

@@ -16,6 +16,7 @@ import dice.Die;
  */
 public class YouthPath {
 	
+	// Type of background, made as an enum for the reflection stuff later on
 	protected enum BackgroundType {
 		Earthborn("Earthborn"),
 		Orbital("Orbital"),
@@ -56,6 +57,8 @@ public class YouthPath {
 
 	}
 	
+	// This probably can go away. It ends up complicating things more than I 
+	// thought it would
 	protected class FluffPackage {
 		LifePathPackage p;
 		String fluff;
@@ -95,16 +98,16 @@ public class YouthPath {
 	protected boolean isAsync;
 	
 	@SuppressWarnings("unchecked")
-	static final protected VariableRollObject<BackgroundType>[] backgroundTypes = new VariableRollObject[BackgroundType.values().length];
+	static final protected ChartEntry<BackgroundType>[] backgroundTypes = new ChartEntry[BackgroundType.values().length];
 	static 	{
-		backgroundTypes[0] =  new VariableRollObject<BackgroundType>(1,  50,  BackgroundType.Earthborn);
-		backgroundTypes[1] =  new VariableRollObject<BackgroundType>(51, 60,  BackgroundType.Orbital);
-		backgroundTypes[2] =  new VariableRollObject<BackgroundType>(61, 68,  BackgroundType.Lunar);
-		backgroundTypes[3] =  new VariableRollObject<BackgroundType>(69, 76,  BackgroundType.Martian);
-		backgroundTypes[4] =  new VariableRollObject<BackgroundType>(77, 82,  BackgroundType.Sunward);
-		backgroundTypes[5] =  new VariableRollObject<BackgroundType>(83, 89,  BackgroundType.Rimward);
-		backgroundTypes[6] =  new VariableRollObject<BackgroundType>(90, 95,  BackgroundType.Migrant);
-		backgroundTypes[7] =  new VariableRollObject<BackgroundType>(96, 100, BackgroundType.Created);
+		backgroundTypes[0] =  new ChartEntry<BackgroundType>(1,  50,  BackgroundType.Earthborn);
+		backgroundTypes[1] =  new ChartEntry<BackgroundType>(51, 60,  BackgroundType.Orbital);
+		backgroundTypes[2] =  new ChartEntry<BackgroundType>(61, 68,  BackgroundType.Lunar);
+		backgroundTypes[3] =  new ChartEntry<BackgroundType>(69, 76,  BackgroundType.Martian);
+		backgroundTypes[4] =  new ChartEntry<BackgroundType>(77, 82,  BackgroundType.Sunward);
+		backgroundTypes[5] =  new ChartEntry<BackgroundType>(83, 89,  BackgroundType.Rimward);
+		backgroundTypes[6] =  new ChartEntry<BackgroundType>(90, 95,  BackgroundType.Migrant);
+		backgroundTypes[7] =  new ChartEntry<BackgroundType>(96, 100, BackgroundType.Created);
 	}
 	
 	public YouthPath() {
@@ -182,7 +185,7 @@ public class YouthPath {
 	private BackgroundType getAllowedBackground(){
 		Die d100 = new Die(100);
 		if (this.allowedBackgrounds == null || this.allowedBackgrounds.contains("(Select All)"))
-			return VariableRollObject.findResult(YouthPath.backgroundTypes, d100.Roll());
+			return ChartEntry.findResult(YouthPath.backgroundTypes, d100.Roll());
 				
 		boolean createdSubtypeSelected = false;
 		// If you have a subtype selected
@@ -203,7 +206,7 @@ public class YouthPath {
 		// most cases probably
 		BackgroundType result ;
 		do{
-			result = VariableRollObject.findResult(YouthPath.backgroundTypes, d100.Roll());
+			result = ChartEntry.findResult(YouthPath.backgroundTypes, d100.Roll());
 		} while ( ! (this.allowedBackgrounds.contains(result.text) || 
 				(createdSubtypeSelected && result.equals("Created"))));
 		

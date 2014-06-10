@@ -1,8 +1,13 @@
 package lifepath;
 
-
 import character.Skill;
+import dice.Die;
 
+/**
+ * One of the four package types. This one is focus packages
+ * @author terrasaur
+ *
+ */
 public class FocusPackage extends LifePathPackage {
 	List packageName;
 	
@@ -28,7 +33,11 @@ public class FocusPackage extends LifePathPackage {
 		this.getPackageContents();
 	}
 
-
+	/**
+	 * List of all factions. Each package has a list enum containing its list objects.
+	 * When creating a package, the class will look up the package in this list.
+	 * @author terrasaur
+	 */
 	public enum List {
 		Academic          ("Academic"),
 		Activist          ("Activist"),
@@ -89,7 +98,11 @@ public class FocusPackage extends LifePathPackage {
 		return ret.substring(0, ret.length()-1);
 	}
 
-
+	/**
+	 * Looks up a package by the label string. If it doesn't exist, returns null.
+	 * @param label A string of the package name
+	 * @return The package's list name by enum value
+	 */
 	public static List getPackageByLabel(String label) {
 		for (List l : List.values()){
 			if (l.equals(label))
@@ -98,8 +111,11 @@ public class FocusPackage extends LifePathPackage {
 		return null;
 	}
 	
-	
+	/**
+	 * This assigns all the package contents.
+	 */
 	private void getPackageContents() {
+		Die d10 = new Die(10);
 		switch(this.packageName){
 		case Academic:
 			this.suggestedMotivations.add("+Open Source");
@@ -683,7 +699,13 @@ public class FocusPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Programming", 30));
 			} else if (this.ppCost == 3){
 				this.bonusList.add(new StatBonus("Choose Rep", 50));
-				this.choiceList.add("Add Academics: Computer Science or Academics: Cryptography at 40");
+				if (this.getRandomSkills)
+					if ( d10.Roll() > 5)
+						this.skillList.add(new Skill("Academics", "Computer Science", 40)); 
+					else
+						this.skillList.add(new Skill("Academics", "Cryptography", 40)); 
+				else
+					this.choiceList.add("Add Academics: Computer Science or Academics: Cryptography at 40");
 				this.skillList.add(new Skill("Hardware", "Electronics", 15)); 
 				this.skillList.add(new Skill("Infosec", 50));
 				this.skillList.add(new Skill("Interfacing", 30));

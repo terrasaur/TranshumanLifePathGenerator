@@ -66,17 +66,13 @@ public class LifePath {
 		this.character   = new EPCharacter(name);
 		this.initFields();
 	}
-	public LifePath(EPCharacter c) {
-		super();
-		this.character   = c;
-		this.initFields();
-	}
 	public LifePath() {
 		super();
 		this.character   = new EPCharacter();
 		this.initFields();
 	}
 	
+	// Clears fields and whatnot
 	private void initFields(){
 		this.todo      = new TreeSet<String>();
 		this.childhood = new YouthPath();
@@ -131,7 +127,7 @@ public class LifePath {
 
 		
 		// Get language
-		this.nativeLanguage = VariableRollObject.findResult(RandomSkillCharts.languageFields, d100.Roll());
+		this.nativeLanguage = ChartEntry.findResult(RandomSkillCharts.languageFields, d100.Roll());
 		this.character.addNativeLanguage(this.nativeLanguage);
 		
 		// Get background event (might override youth package, so roll now)
@@ -306,12 +302,14 @@ public class LifePath {
 		return pathEvent;
 	}
 	
+	/**
+	 * Sets the adult path (steps 6-9)
+	 */
 	public void setAdultPath(){
 		Die d100 = new Die(100);
 
 		this.adulthood.allowedFactions = this.allowedFactions;
-		
-		// START: Apply Adult path (steps 6-9)
+
 		ArrayList<PathEvent> fallEvent = null;
 		if (this.childhood.isAsync){ // you can only get this during childhood if you are Lost
 			this.age = "Lost Generation";
@@ -346,7 +344,7 @@ public class LifePath {
 			
 		this.eventList.addAll(PathEvent.getPostFallEvent(d100.Roll()));
 		
-		// Adds up all the packages so far
+		// Adds up all the packages rolled so far
 		this.packages.addAll(this.adulthood.getPackages());
 
 	}
@@ -409,6 +407,10 @@ public class LifePath {
 		}
 	}
 
+	/**
+	 * Prints the character to a file
+	 * @param filename name of the file you want to print to
+	 */
 	public void printToFile(String filename){
 		PrintStream writer;
 		try {

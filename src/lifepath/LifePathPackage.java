@@ -22,7 +22,9 @@ public abstract class LifePathPackage {
 	ArrayList<String>    choiceList;
 	ArrayList<String>    suggestedMotivations;
 	Integer creditsMod;
-	boolean getRandomSkills = false;
+	// Some packages have a "pick A OR B". If this is true, the package will
+	// pick one or the other randomly at package creation
+	boolean getRandomSkills = false; 
 	
 	public enum Type {
 		Background,
@@ -31,6 +33,8 @@ public abstract class LifePathPackage {
 		Customization
 	}
 	
+	// Helper class that tracks stat boosts. Really just a string and int combo.
+	// Can probably be replaced with a hashmap
 	protected class StatBonus{
 		String label;
 		int bonus;
@@ -77,20 +81,7 @@ public abstract class LifePathPackage {
 		this.bonusList = new ArrayList<StatBonus>();
 		this.choiceList = new ArrayList<String>();
 		this.suggestedMotivations = new ArrayList<String>();
-		/* Regular expressions for this bullcrap: 
-		 * (\w+):\s+\(Choose One\)\s+(\d\d)[^\"]
-		 * this\.choiceList\.add\(\"Add one $1 skill of your choice at $2\"\);
-		 * 
-		 * (\w+):\s+\(?(\w+)\)?\s+(\d\d)[^\"]
-		 * this\.skillList\.add\(new Skill\(\"$1\"\, \"$2\"\, $3\)\);
-		 * 
-		 * (\w+\s\w+?)\s+(\d\d)[^\"]
-		 * (\w+)\s+(\d\d)[^\"]
-		 * this\.skillList\.add\(new Skill\(\"$1\"\, $2\)\);
-		 * 
-		 * (\+\w+\s\w+?),
-		 * this\.suggestedMotivations\.add\(\"$1\"\); 
-		 */	
+
 	}
 
 	public abstract String prettyPrint();	
@@ -110,6 +101,27 @@ public abstract class LifePathPackage {
 		}
 		return ret;
 	}
+	
+	/* Regular expressions for the getPackageContents function found in all of the 
+	 * packages (but not here, because I wanted to keep it private): 
+	 * (\w+):\s+\(Choose One\)\s+(\d\d)[^\"]
+	 * this\.choiceList\.add\(\"Add one $1 skill of your choice at $2\"\);
+	 * 
+	 * (\w+):\s+\(?(\w+)\)?\s+(\d\d)[^\"]
+	 * this\.skillList\.add\(new Skill\(\"$1\"\, \"$2\"\, $3\)\);
+	 * 
+	 * (\w+\s\w+?)\s+(\d\d)[^\"]
+	 * (\w+)\s+(\d\d)[^\"]
+	 * this\.skillList\.add\(new Skill\(\"$1\"\, $2\)\);
+	 * 
+	 * (\+\w+\s\w+?),
+	 * this\.suggestedMotivations\.add\(\"$1\"\);
+	 * 
+	 * this\.choiceList\.add\("Add ([A-Za-z :]+?) or ([A-Za-z :]+?) at (\d\d)"\);
+	 * if \(this\.getRandomSkills\)\R\t\t\t\t\tif \(d10\.Roll\(\) > 5\)\R\t\t\t\t\t\t
+	 * this\.skillList\.add\(new Skill\("$2", $4\)\);\R\t\t\t\t\telse\R\t\t\t\t\t\t
+	 * this\.skillList\.add\(new Skill\("$3", $4\)\);\R\t\t\t\telse\R\t\t\t\t\t$1 
+	 */	
 	
 	/**
 	 * Applies all packages from a list. Use this to apply many packages of 
@@ -233,6 +245,11 @@ public abstract class LifePathPackage {
 		}
 	}
 
+	/**
+	 * Gets all the motivations that each package suggests, in a nice handy list
+	 * @param packages A list of the packages
+	 * @return An arrayList of strings of motivations
+	 */
 	public static ArrayList<String> getMotivations(ArrayList<LifePathPackage> packages) {
 		ArrayList<String> motivations = new ArrayList<String>();
 		for (LifePathPackage p : packages){
