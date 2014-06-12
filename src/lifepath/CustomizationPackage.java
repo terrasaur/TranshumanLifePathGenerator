@@ -202,7 +202,7 @@ public class CustomizationPackage extends LifePathPackage {
 			break;
 		case Student:
 			this.skillList.add(new Skill("Academics", "Choice", 40)); 
-			this.skillList.add(new Skill("Interests", "Choice", 30)); 
+			this.skillList.add(new Skill("Interest", "Choice", 30)); 
 			this.skillList.add(new Skill("Research", 30));
 			break;
 		case SurvivalTraining:

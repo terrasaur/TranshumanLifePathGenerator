@@ -24,7 +24,7 @@ public class PathEvent {
 	protected ActionType action;
 	private String additionalInfo = null;	
 	private int value;
-	private boolean resolved = false;
+	protected String resleeveString = null;
 
 	
 	// Yes, I need all of these constructors. Hush.
@@ -33,41 +33,35 @@ public class PathEvent {
 		this.label = l;
 		this.action = ActionType.todo;
 		this.value = 0;
-		this.resolved = false;
 	}
 	public PathEvent(String f, ActionType a, String l){
 		this.fluff = f;
 		this.action = a;
 		this.label = l;
 		this.value = 0;
-		this.resolved = false;
 	}
 	public PathEvent(String f, ActionType a){
 		this.fluff = f;
 		this.action = a;
 		this.value = 0;
-		this.resolved = false;
 	}
 	public PathEvent(String f, ActionType a, int value, String l){
 		this.fluff = f;
 		this.label = l;
 		this.action = a;
 		this.value = value;
-		this.resolved = false;
 	}
 	public PathEvent(String f, ActionType a, int value){
 		this.fluff = f;
 		this.action = a;
 		this.value = value;
 		this.additionalInfo = null;
-		this.resolved = false;
 	}
 	public PathEvent(String f, ActionType a, String l, String additonalInfo){
 		this.fluff = f;
 		this.action = a;
 		this.label = l;
 		this.additionalInfo = additonalInfo;
-		this.resolved = false;
 	}
 	public PathEvent(String f, ActionType a, int value, String l, String additonalInfo){
 		this.fluff = f;
@@ -75,7 +69,6 @@ public class PathEvent {
 		this.value = value;
 		this.label = l;
 		this.additionalInfo = additonalInfo;
-		this.resolved = false;
 	}
 	
 	// The type of action. This indicates how to resolve it. Things without labels
@@ -129,89 +122,87 @@ public class PathEvent {
 		String returnStr = null;
 		Die d100 = new Die (100);
 		int roll;
-		if (!this.resolved){
-			switch(this.action){
-			case addSkill:
-				if (this.additionalInfo != null)
-					character.addSkill(this.label, this.additionalInfo, this.value);
-				else
-					character.addSkill(this.label, this.value);
-				break;
-			case addTrait:
-				character.addTrait(this.label);
-				if (this.additionalInfo != null)
+		switch(this.action){
+		case addSkill:
+			if (this.additionalInfo != null)
+				character.addSkill(this.label, this.additionalInfo, this.value);
+			else
+				character.addSkill(this.label, this.value);
+			break;
+		case addTrait:
+			character.addTrait(this.label);
+			if (this.additionalInfo != null)
+				returnStr = this.additionalInfo;
+			break;
+		case getStoryEvent:
+			if (character.modifyStat("MOX", 1) == -1)
+				returnStr = "Error: Add 1 moxie";
+			break;
+		case lowerSkill:
+			break;
+		case modifyAptitude:
+		case modifyStat:
+			if (character.modifyStat(this.label, this.value) == -1)
+				returnStr = "Error while adding " + this.label + " + " + this.value;
+			if (this.additionalInfo != null)
+				returnStr = this.additionalInfo;
+			break;
+		case modifyCredits:
+			if (this.label != null){ // only one case, and the label is xd10
+				this.value = this.value * new Die(10).Roll();
+			}
+			character.modifyCredits(this.value);
+			break;
+		case newMorph:
+			Morph m = null;
+			if (this.additionalInfo != null){
+				if (this.additionalInfo.contains("Trait: ")){
+					character.addTrait(this.additionalInfo.substring("Trait: ".length()));
+				} else if (this.additionalInfo == "Gain +1 Moxie"){
+					character.modifyStat("MOX", 1);
+				} else if (this.additionalInfo.contains("Skill: ")){
+					// format is "Skill: dd <String>"
+					this.additionalInfo = this.additionalInfo.substring("Trait: ".length());
+					int value = Integer.parseInt(this.additionalInfo.substring(0, 2));
+					character.addSkill(this.additionalInfo.substring(3), value);
+				} else {
 					returnStr = this.additionalInfo;
-				break;
-			case getStoryEvent:
-				if (character.modifyStat("MOX", 1) == -1)
-					returnStr = "Error: Add 1 moxie";
-				break;
-			case lowerSkill:
-				break;
-			case modifyAptitude:
-			case modifyStat:
-				if (character.modifyStat(this.label, this.value) == -1)
-					returnStr = "Error while adding " + this.label + " + " + this.value;
-				if (this.additionalInfo != null)
-					returnStr = this.additionalInfo;
-				break;
-			case modifyCredits:
-				if (this.label != null){ // only one case, and the label is xd10
-					this.value = this.value * new Die(10).Roll();
 				}
-				character.modifyCredits(this.value);
-				break;
-			case newMorph:
-				Morph m = null;
-				if (this.additionalInfo != null){
-					if (this.additionalInfo.contains("Trait: ")){
-						character.addTrait(this.additionalInfo.substring("Trait: ".length()));
-					} else if (this.additionalInfo == "Gain +1 Moxie"){
-						character.modifyStat("MOX", 1);
-					} else if (this.additionalInfo.contains("Skill: ")){
-						// format is "Skill: dd <String>"
-						this.additionalInfo = this.additionalInfo.substring("Trait: ".length());
-						int value = Integer.parseInt(this.additionalInfo.substring(0, 2));
-						character.addSkill(this.additionalInfo.substring(3), value);
-					} else {
-						returnStr = this.additionalInfo;
-					}
+			}
+			if (this.label == "Any"){
+				roll = d100.Roll();
+				m = LifePathCharts.getRandomMorph(roll);
+			} else if (this.label == "No pod"){ 
+				do {
+					roll = d100.Roll();
+				} while (roll > 55 && roll <= 65); // Pod: 56-65	
+				m = LifePathCharts.getRandomMorph(roll);
+			} else if (this.label == "No pod or uplift") {
+				do {
+					roll = d100.Roll();
+				} while (roll > 50 && roll <= 65); // Uplift: 51-55,  Pod: 56-65				
+				m = LifePathCharts.getRandomMorph(roll);
+			} else if (this.label == "Only pod or uplift"){ // 50/50
+				if (d100.Roll() <= 50){
+					m = LifePathCharts.getUplift();
+				} else {
+					m = LifePathCharts.getPod();
 				}
-				if (this.label == "Any" && !this.resolved){
-					m = LifePathCharts.getRandomMorph(d100.Roll());
-				} else if (this.label == "No pod"){ 
-					do {
-						roll = d100.Roll();
-					} while (roll > 55 && roll <= 65); // Pod: 56-65	
-					m = LifePathCharts.getRandomMorph(roll);
-				} else if (this.label == "No pod or uplift") {
-					do {
-						roll = d100.Roll();
-					} while (roll > 50 && roll <= 65); // Uplift: 51-55,  Pod: 56-65				
-					m = LifePathCharts.getRandomMorph(roll);
-				} else if (this.label == "Only pod or uplift"){ // 50/50
-					if (d100.Roll() <= 50){
-						m = LifePathCharts.getUplift();
-					} else {
-						m = LifePathCharts.getPod();
-					}
-				} else if (this.label == "Only Synth"){
-					m = LifePathCharts.getSynthmorph();
-				} else { // Everything else is just weird, tell player to do it manually
-					returnStr = "Roll new morph, " + this.label;
-					break;
-				}
-				character.setMorph(m);
-				this.fluff += getResleeveString(m);
+			} else if (this.label == "Only Synth"){
+				m = LifePathCharts.getSynthmorph();
+			} else { // Everything else is just weird, tell player to do it manually
+				returnStr = "Roll new morph, " + this.label;
 				break;
-			case todo:
-				returnStr = this.label;
-				break;
-			default: // Cases not listed do nothing at this point
-				break;
-			}			
-			this.resolved = true;
-		}
+			}
+			character.setMorph(m);
+			this.resleeveString = getResleeveString(m);
+			break;
+		case todo:
+			returnStr = this.label;
+			break;
+		default: // Cases not listed do nothing at this point
+			break;
+		}			
 		
 		return returnStr;
 	}
@@ -347,7 +338,9 @@ public class PathEvent {
 	
 	@Override
 	public String toString() {
-		String prettyStr = this.timeline + " Event: " + this.fluff;
+		String prettyStr = this.timeline + " Event: " + this.fluff ;
+		if (this.resleeveString != null)
+			prettyStr += this.resleeveString;
 		return prettyStr;
 	}
 	

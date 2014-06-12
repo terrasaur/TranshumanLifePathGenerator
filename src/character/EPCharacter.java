@@ -532,6 +532,10 @@ public class EPCharacter {
 	 * @param morph Morph object
 	 */
 	public void setMorph(Morph morph) {
+		if (morph == null){
+			System.out.println("Error: Adding null morph");
+			return;
+		}
 		this.morph = morph;
 		
 		if (morph != null){
@@ -612,6 +616,10 @@ public class EPCharacter {
 
 	public String getMorphAptitudeChoice() {
 		return this.morph.aptChoice;
+	}
+
+	public int getNumEgoTraits() {
+		return this.traits.size();
 	}
 
 

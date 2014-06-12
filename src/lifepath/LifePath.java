@@ -147,21 +147,8 @@ public class LifePath {
 		if (this.totalPP < 10) {
 			this.packages = this.adulthood.getAdditionalPackages(this.packages, 
 					10-this.totalPP, this.childhood.isUplift);
-		}
-		
-		// Add some messages to the todo list
-		if (this.character.getMorph() != null && this.character.getMorph() != "Flat"){
-			if (this.character.getMorphAptitudeChoice() != null)
-				this.todo.add("Additional morph aptitudes: " + this.character.getMorphAptitudeChoice());
-			else
-				this.todo.add("Look up morph and apply morph bonuses");
-		}
-		this.todo.add("Look up and apply all traits");
-		
-		
-		// Resolve packages
-		this.todo.addAll(LifePathPackage.applyAllPackages(this.character, this.packages, this.chooseSkills));
-		
+		}		
+	
 		// Resolve post-life path stuff
 		this.character.setStartingCredits(LifePathCharts.getStartingCredits(d10.Roll(), d10.Roll()));
 		if (this.getFirewallEvent)
@@ -176,6 +163,20 @@ public class LifePath {
 				this.todo.add(s);
 			}
 		}
+		
+		// Add some messages to the todo list
+		if (this.character.getMorph() != null && this.character.getMorph() != "Flat"){
+			if (this.character.getMorphAptitudeChoice() != null)
+				this.todo.add("Additional morph aptitudes: " + this.character.getMorphAptitudeChoice());
+			else
+				this.todo.add("Look up morph and apply morph bonuses");
+		}
+		if (this.character.getNumEgoTraits() > 0)
+			this.todo.add("Look up and apply all traits");
+
+		
+		// Resolve packages
+		this.todo.addAll(LifePathPackage.applyAllPackages(this.character, this.packages, this.chooseSkills));
 
 		// Gets motivations
 		ArrayList<String> motivationList = LifePathPackage.getMotivations(this.packages);
