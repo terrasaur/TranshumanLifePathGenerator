@@ -10,7 +10,7 @@ public class CustomizationPackage extends LifePathPackage {
 	public CustomizationPackage(List name, Integer cost) {
 		super(name.text, cost);
 		this.packageName = name;
-		this.pkgType = Type.Customization;
+		this.pkgType = PackageType.Customization;
 		if (this.ppCost != 1 ){
 			System.out.println("Error: You have the wrong cost for a package: " + this.ppCost);
 			this.ppCost = 1;
@@ -21,7 +21,7 @@ public class CustomizationPackage extends LifePathPackage {
 	public CustomizationPackage(String name, Integer cost) {
 		super(name, cost);
 		this.packageName = getPackageByLabel(name);
-		this.pkgType = Type.Customization;
+		this.pkgType = PackageType.Customization;
 		if (this.ppCost != 1){
 			System.out.println("Error: You have the wrong cost for a package: " + this.ppCost);
 			this.ppCost = 1;

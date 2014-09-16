@@ -544,8 +544,8 @@ public class AdultPath {
 	@SuppressWarnings("unused")
 	private FocusPackage.List[] enclaverFocusArray = new FocusPackage.List[]{FocusPackage.List.Academic, 
 		FocusPackage.List.ConArtist, FocusPackage.List.Dealer, FocusPackage.List.Dealer, FocusPackage.List.Face, 
-		FocusPackage.List.Icon, FocusPackage.List.Investigator, FocusPackage.List.Journo, FocusPackage.List.Medic, 
-		FocusPackage.List.Psychosurgeon };
+		FocusPackage.List.Icon, FocusPackage.List.Investigator, FocusPackage.List.Journo, 
+		FocusPackage.List.Medic, FocusPackage.List.Psychosurgeon };
 	@SuppressWarnings("unused")
 	private FocusPackage.List[] indentureFocusArray = new FocusPackage.List[]{FocusPackage.List.Activist, 
 		FocusPackage.List.Bodyguard, FocusPackage.List.BotJammer, FocusPackage.List.ConArtist, 
@@ -558,19 +558,19 @@ public class AdultPath {
 		FocusPackage.List.Soldier, FocusPackage.List.Soldier, FocusPackage.List.Spy};
 	@SuppressWarnings("unused")
 	private FocusPackage.List[] scientistFocusArray = new FocusPackage.List[]{FocusPackage.List.Academic, 
-		FocusPackage.List.Explorer, FocusPackage.List.Genehacker, FocusPackage.List.Investigator, FocusPackage.List.Medic, 
-		FocusPackage.List.Psychosurgeon, FocusPackage.List.Scientist, FocusPackage.List.Scientist, 
-		FocusPackage.List.SmartAnimalHandler, FocusPackage.List.Techie};
+		FocusPackage.List.Explorer, FocusPackage.List.Genehacker, FocusPackage.List.Investigator, 
+		FocusPackage.List.Medic, FocusPackage.List.Psychosurgeon, FocusPackage.List.Scientist,
+		FocusPackage.List.Scientist, FocusPackage.List.SmartAnimalHandler, FocusPackage.List.Techie};
 	@SuppressWarnings("unused")
 	private FocusPackage.List[] spacerFocusArray = new FocusPackage.List[]{FocusPackage.List.BotJammer, 
-		FocusPackage.List.EgoHunter, FocusPackage.List.Explorer, FocusPackage.List.Explorer, FocusPackage.List.Pirate, 
-		FocusPackage.List.Scavenger, FocusPackage.List.Soldier, FocusPackage.List.Smuggler, 
-		FocusPackage.List.Smuggler, FocusPackage.List.Spy};
+		FocusPackage.List.EgoHunter, FocusPackage.List.Explorer, FocusPackage.List.Explorer, 
+		FocusPackage.List.Pirate, FocusPackage.List.Scavenger, FocusPackage.List.Soldier,
+		FocusPackage.List.Smuggler, FocusPackage.List.Smuggler, FocusPackage.List.Spy};
 	@SuppressWarnings("unused")
 	private FocusPackage.List[] techieFocusArray = new FocusPackage.List[]{FocusPackage.List.BotJammer, 
-		FocusPackage.List.Explorer, FocusPackage.List.Genehacker, FocusPackage.List.Hacker, FocusPackage.List.Hacker, 
-		FocusPackage.List.Scavenger, FocusPackage.List.Scientist, FocusPackage.List.Spy, FocusPackage.List.Techie, 
-		FocusPackage.List.Techie};
+		FocusPackage.List.Explorer, FocusPackage.List.Genehacker, FocusPackage.List.Hacker, 
+		FocusPackage.List.Hacker, FocusPackage.List.Scavenger, FocusPackage.List.Scientist, 
+		FocusPackage.List.Spy, FocusPackage.List.Techie, FocusPackage.List.Techie};
 	
 	@SuppressWarnings("unused")
 	private FactionPackage.List[] autonomistFactionArray = new FactionPackage.List[]{FactionPackage.List.Anarchist, 

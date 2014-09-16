@@ -11,7 +11,7 @@ public class FactionPackage extends LifePathPackage {
 	public FactionPackage(List name, Integer cost) {
 		super(name.text, cost);
 		this.packageName = name;
-		this.pkgType = Type.Faction;
+		this.pkgType = PackageType.Faction;
 		if (this.ppCost != 1 && this.ppCost != 3){
 			System.out.println("Error: You have the wrong cost for a package: " + this.ppCost);
 			this.ppCost = 1;
@@ -23,7 +23,7 @@ public class FactionPackage extends LifePathPackage {
 	public FactionPackage(String name, Integer cost) {
 		super(name, cost);
 		this.packageName = getPackageByLabel(name);
-		this.pkgType = Type.Faction;
+		this.pkgType = PackageType.Faction;
 		if (this.ppCost != 1 && this.ppCost != 3){
 			System.out.println("Error: You have the wrong cost for a package: " + this.ppCost);
 			this.ppCost = 1;

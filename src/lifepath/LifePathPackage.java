@@ -15,7 +15,7 @@ import character.Skill;
 public abstract class LifePathPackage {
 	String label;
 	Integer ppCost;
-	Type pkgType;
+	PackageType pkgType;
 	ArrayList<Skill>     skillList;
 	ArrayList<String>    traitList;
 	ArrayList<StatBonus> bonusList;
@@ -26,7 +26,7 @@ public abstract class LifePathPackage {
 	// pick one or the other randomly at package creation
 	boolean getRandomSkills = false; 
 	
-	public enum Type {
+	public enum PackageType {
 		Background,
 		Faction,
 		Focus,

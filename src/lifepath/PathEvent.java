@@ -215,7 +215,7 @@ public class PathEvent {
 	 */
 	private static String getResleeveString(Morph m){
 		String returnStr = " You are resleeved as a " + m.getLabel();
-		if (m.getMorphType() == Morph.Type.infomorph){
+		if (m.getMorphType() == Morph.MorphType.infomorph){
 			returnStr = " You are instantiated as";
 			if (m.getLabel() == "Digimorph"){
 				returnStr+= " a " + m.getLabel();

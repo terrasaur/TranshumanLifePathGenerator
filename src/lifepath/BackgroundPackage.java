@@ -15,7 +15,7 @@ public class BackgroundPackage extends LifePathPackage {
 	
 	public BackgroundPackage(List name, Integer cost) {
 		super(name.text, cost);
-		this.pkgType = Type.Background;
+		this.pkgType = PackageType.Background;
 		this.packageName = name;
 		if (this.ppCost != 1 && this.ppCost != 3 && this.ppCost != 5){
 			System.out.println("Error: You have the wrong cost for a package: " + this.ppCost);
@@ -27,7 +27,7 @@ public class BackgroundPackage extends LifePathPackage {
 	public BackgroundPackage(String name, Integer cost) {
 		super(name, cost);
 		this.packageName = getPackageByLabel(name);
-		this.pkgType = Type.Background;			
+		this.pkgType = PackageType.Background;			
 		if (this.ppCost != 1 && this.ppCost != 3 && this.ppCost != 5){
 			System.out.println("Error: You have the wrong cost for a package: " + this.ppCost);
 			this.ppCost = 1;

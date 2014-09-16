@@ -199,7 +199,7 @@ public class EPCharacter {
 		
 		// morph based
 		if (this.morph != null){
-			if (this.morph.type.category == Morph.Type.infomorph) {
+			if (this.morph.type.category == Morph.MorphType.infomorph) {
 				this.setStat("SPD", 3);
 			} else {
 				if (this.morph.traits.contains("Neurachem"))
@@ -208,7 +208,7 @@ public class EPCharacter {
 					this.setStat("SPD", 1);
 				this.setStat("WT", this.morph.type.woundThreshold);
 				this.setStat("DUR", this.morph.type.durability); 
-				if (this.morph.type.category == Morph.Type.synthmorph){
+				if (this.morph.type.category == Morph.MorphType.synthmorph){
 					this.setStat("DR", this.morph.type.durability * 2); 
 				} else {
 					this.setStat("DR", (int)Math.ceil(this.morph.type.durability * 1.5)); 
@@ -350,7 +350,7 @@ public class EPCharacter {
 		for (Aptitude a : this.aptitudes.values()){
 			output += a.name.shortText + ": " + a.total + " ";
 		}
-		if (this.morph.type.category != Morph.Type.infomorph){
+		if (this.morph.type.category != Morph.MorphType.infomorph){
 			output += "\n";
 			for (Stats s : this.stats.values()){
 				output += s.name + ": " + s.value + " ";
@@ -510,9 +510,20 @@ public class EPCharacter {
 
 	/**
 	 * This should calculate the CP spent on the character. It doesn't.
-	 * @return
+	 * @return cp spent on character
 	 */
 	public int calculateCP(){
+		int cpSpent = 0;
+		for (Skill s: this.skills.values()){
+			if (!s.isNativeLanguage){ // since this is free
+				cpSpent += s.base;
+			}
+		}
+		for (Aptitude a: this.aptitudes.values()){
+			cpSpent += (15 - a.base) * 10;
+		}
+		
+		this.CP = cpSpent;
 		return this.CP;
 	}
 
@@ -539,7 +550,7 @@ public class EPCharacter {
 		this.morph = morph;
 		
 		if (morph != null){
-			if (this.morph.type.category == Morph.Type.infomorph) {
+			if (this.morph.type.category == Morph.MorphType.infomorph) {
 				this.setStat("SPD", 3);
 				this.setStat("WT",  0);
 				this.setStat("DUR", 0);
@@ -548,7 +559,7 @@ public class EPCharacter {
 				this.setStat("SPD", 1);
 				this.setStat("WT",  this.morph.type.woundThreshold);
 				this.setStat("DUR", this.morph.type.durability); 
-				if (this.morph.type.category == Morph.Type.synthmorph){
+				if (this.morph.type.category == Morph.MorphType.synthmorph){
 					this.setStat("DR", this.morph.type.durability * 2); 
 				} else {
 					this.setStat("DR", (int)Math.ceil(this.morph.type.durability * 1.5)); 
@@ -561,6 +572,11 @@ public class EPCharacter {
 		return this.morph.type.category.name();
 	}
 	
+	/**
+	 * Adds a sleight. These are just strings.
+	 * @param sleight a string of the sleight name
+	 * @return true if added, false if it already exists.
+	 */
 	public boolean addSleight(String sleight){
 		if (this.sleights.contains(sleight)) {
 			return false;
@@ -570,6 +586,14 @@ public class EPCharacter {
 		return true;
 	}
 	
+	/**
+	 * Adds an ego trait. Morph traits are added to the morph directly.
+	 * I suppose eventually traits should be objects that modify the character
+	 * but right now they are just strings.
+	 * @param trait - string of the trait
+	 * @return whether or not the trait was added (returns false if you 
+	 * have the trait already)
+	 */
 	public boolean addTrait(String trait) {
 		if (trait.contains("Psi")){
 			int rating = Character.getNumericValue(trait.charAt(trait.length() - 2));
