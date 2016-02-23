@@ -281,7 +281,7 @@ public class LifePath {
 	 * @param roll a 1-10 roll of type of youth
 	 * @param pathEvent 
 	 */
-	public PathEvent setYouthPath(PathEvent pathEvent){
+	protected PathEvent setYouthPath(PathEvent pathEvent){
 		this.childhood.allowedBackgrounds = this.allowedBackgrounds;
 		this.childhood.getYouthPath();
 		
@@ -306,7 +306,7 @@ public class LifePath {
 	/**
 	 * Sets the adult path (steps 6-9)
 	 */
-	public void setAdultPath(){
+	protected void setAdultPath(){
 		Die d100 = new Die(100);
 
 		this.adulthood.allowedFactions = this.allowedFactions;
@@ -353,7 +353,7 @@ public class LifePath {
 	/**
 	 * Sets the age of the character - Table 5
 	 */
-	public void getAge(){
+	protected void getAge(){
 		Die d100 = new Die(100);
 		int roll = d100.Roll();
 		

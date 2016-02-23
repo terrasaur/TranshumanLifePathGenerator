@@ -203,7 +203,6 @@ public class Trait {
 
 	
 	private void initializeTrait() {
-		// TODO Auto-generated method stub
 		
 	}
 }

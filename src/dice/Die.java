@@ -6,7 +6,7 @@ import java.lang.Math;
  * Class for a single die. Dice should have a side that does not 
  * change once the die is created. The default is 6.
  * 
- * @author oswalte
+ * @author terrasaur
  *
  */
 public class Die {
@@ -77,6 +77,10 @@ public class Die {
 	 */
 	public Integer getRoll(){
 		return this.roll;
+	}
+	
+	public static int getRandIdx(int size) {
+		return (int)(Math.random() * ((size - 1) + 1));
 	}
 
 }

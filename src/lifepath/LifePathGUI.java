@@ -1,5 +1,6 @@
 package lifepath;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
@@ -44,6 +45,7 @@ public class LifePathGUI extends JFrame implements ActionListener,
 	private JPanel    mainPanel;
 	private JButton   newCharacterButton;
 	private JButton   clearTextButton;
+	@SuppressWarnings("unused")
 	private JButton   writeToFileButton;
 	private JTextArea display;
 	private LifePath  lifePath;
@@ -71,30 +73,27 @@ public class LifePathGUI extends JFrame implements ActionListener,
 		this.mainPanel = new JPanel();	
 		SpringLayout layout = new SpringLayout();
 		this.mainPanel.setLayout(layout);
+		mainPanel.setBackground(Color.WHITE);
 		
 		// Options panel
 		this.optionsPanel = new JPanel();
 		this.optionsPanel.setLayout(new BoxLayout(this.optionsPanel, BoxLayout.PAGE_AXIS));
 		
-		this.getFirewallEvent = new JCheckBox("Get Firewall Event");
-		this.getFirewallEvent.addItemListener(this);
-		this.getFirewallEvent.setSelected(true);
+		this.getFirewallEvent = newCheckBox("Get Firewall Event", true);
 		this.optionsPanel.add(this.getFirewallEvent);	
 		
-		this.getStoryEvent = new JCheckBox("Get Life Event");
-		this.getStoryEvent.addItemListener(this);
-		this.getStoryEvent.setSelected(true);
+		this.getStoryEvent = newCheckBox("Get Life Event", true);
 		this.optionsPanel.add(this.getStoryEvent);
 		
-		this.getRandomMotivationsButton = new JCheckBox("Randomize motivations");
-		this.getRandomMotivationsButton.addItemListener(this);				
+		this.getRandomMotivationsButton = newCheckBox("Randomize motivations", false);	
 		this.optionsPanel.add(this.getRandomMotivationsButton);
 				
-		this.chooseSkillsButton = new JCheckBox("Assign skills randomly");
-		this.chooseSkillsButton.addItemListener(this);
+		this.chooseSkillsButton = newCheckBox("Assign skills randomly", false);
 		this.optionsPanel.add(this.chooseSkillsButton);	
 		
 		this.optionsPanel.add(new JLabel("Allowed Backgrounds"));
+		optionsPanel.setBackground(Color.WHITE);
+		optionsPanel.setForeground(Color.BLACK);
 
 		DefaultListModel<String> bgList = new DefaultListModel<String>();
 		bgList.addElement("(Select All)");
@@ -117,11 +116,10 @@ public class LifePathGUI extends JFrame implements ActionListener,
 		this.backgroundSelect.setVisibleRowCount(-1);
 		this.backgroundSelect.addListSelectionListener(this);
 		this.backgroundSelect.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		
 		JScrollPane bgScroller = new JScrollPane(this.backgroundSelect);
-		bgScroller.setPreferredSize(new Dimension(150, 237));
+		bgScroller.setPreferredSize(new Dimension(150, 237));		
 		this.optionsPanel.add(bgScroller);
-
-		//this.selectFocus; // TODO: Not sure if I'm going to implement this.
 
 		this.optionsPanel.add(new JLabel(" "));
 		this.optionsPanel.add(new JLabel("Allowed Factions"));
@@ -151,15 +149,12 @@ public class LifePathGUI extends JFrame implements ActionListener,
 		
 		this.mainPanel.add(this.optionsPanel);
 				
-		this.newCharacterButton = new JButton("New Character");		
-		this.newCharacterButton.addActionListener(this);
+		this.newCharacterButton = newButton("New Character");
 		this.mainPanel.add(this.newCharacterButton);
-		this.clearTextButton = new JButton("Clear Text");		
-		this.clearTextButton.addActionListener(this);
+		this.clearTextButton = newButton("Clear Text");
 		this.mainPanel.add(this.clearTextButton);
 		
-		this.writeToFileButton = new JButton("Write to File");
-		this.writeToFileButton.addActionListener(this); // TODO: implement this
+		this.writeToFileButton = newButton("Write to File"); // TODO: implement this
 		
 		this.display = new JTextArea();
 		this.display.setLineWrap(true);
@@ -218,6 +213,23 @@ public class LifePathGUI extends JFrame implements ActionListener,
 		//this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		this.setVisible(true);
+	}
+	
+	private JButton newButton(String label) {
+		JButton theButton = new JButton(label);
+		theButton.addActionListener(this);
+		theButton.setBackground(Color.WHITE);
+		
+		return theButton;
+	}
+
+	private JCheckBox newCheckBox(String label, boolean isChecked){
+		JCheckBox theBox = new JCheckBox(label);
+		theBox.addItemListener(this);
+		theBox.setSelected(isChecked);
+		theBox.setBackground(Color.WHITE);
+		
+		return theBox;
 	}
 	
 

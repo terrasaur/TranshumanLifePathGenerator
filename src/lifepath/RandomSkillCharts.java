@@ -115,15 +115,9 @@ public class RandomSkillCharts {
 		int roll = d100.Roll();
 		String label = ChartEntry.findResult(interestFields, roll);
 		
-		if (roll >= 23 && roll <= 24){ //23, 24 Drugs/Petals/Narcoalgorithms
-			Die d3 = new Die(3);
-			int roll2 = d3.Roll();
-			if (roll2 == 1)
-				return "Drugs";
-			else if (roll2 == 2)
-				return "Petals";
-			else
-				return "Narcoalgorithms";
+		if(label.contains("/")) { //23, 24 Drugs/Petals/Narcoalgorithms
+			String[] opts = label.split("/");
+			return opts[Die.getRandIdx(opts.length)];
 		}
 		if (roll >= 51 && roll <= 52){ //51–52 (Topic) Mesh Forums
 			if (d100.Roll() <= 25)

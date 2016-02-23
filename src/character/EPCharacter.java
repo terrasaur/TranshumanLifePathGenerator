@@ -279,24 +279,47 @@ public class EPCharacter {
 		}
 		ret += "|\n\n";
 		
-		ret += "                                                        SKILLS            \n";
+		ret += "                                                    ACTIVE/PSI SKILLS     \n";
 		ret += "                                         |  APT  |  BASE | MORPH | TOTAL |\n";
 		ret += "          ----------------------------------------------------------------\n";
+		String knSkills  = "";
+		String actSkills = "";
+		String psiSkills = "";
 		for (Skill s : this.skills.values()){
+			String str;
 			if (s.morphBonus > 0){
 				if (s.morphImplantBonus > 0){
-					ret += String.format("%40s |  %3s  |   %2d  |%2d (%2d)|   %2d  |\n", s.getLabel(),
+					str = String.format("%40s |  %3s  |   %2d  |%2d (%2d)|   %2d  |\n", s.getLabel(),
 							s.skill.aptitude, s.base + s.aptBonus, s.morphBonus,
 							s.morphBonus + s.morphImplantBonus,	s.morphBonus + s.aptBonus + s.base);
 				} else {
-					ret += String.format("%40s |  %3s  |   %2d  |   %2d  |   %2d  |\n", s.getLabel(),
+					str = String.format("%40s |  %3s  |   %2d  |   %2d  |   %2d  |\n", s.getLabel(),
 							s.skill.aptitude, s.base + s.aptBonus, s.morphBonus, s.morphBonus + s.aptBonus + s.base);
 				}
 			} else {
-				ret += String.format("%40s |  %3s  |   %2d  |       |   %2d  |\n", s.getLabel(),
+				str = String.format("%40s |  %3s  |   %2d  |       |   %2d  |\n", s.getLabel(),
 						s.skill.aptitude, s.base + s.aptBonus, s.morphBonus + s.aptBonus + s.base);
 			}
+			switch(s.skill.category){
+			case Active:
+				actSkills += str;
+				break;
+			case Knowledge:
+				knSkills += str;
+				break;
+			case Psi:
+				psiSkills += str;
+				break;
+			default:
+				break;			
+			}
 		}
+		ret += actSkills;
+		ret += psiSkills;
+		if (knSkills.length() > 10){
+			ret += "          ---------------------------------------- KNOWLEDGE SKILLS ------\n";
+		}
+		ret += knSkills;		
 		
 		ret += "\n\n        REP \n     ------------ \n";
 		for (Entry<String, Integer> e : this.rep.entrySet()){
