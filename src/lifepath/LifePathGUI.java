@@ -27,6 +27,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.DefaultEditorKit;
@@ -66,7 +68,19 @@ public class LifePathGUI extends JFrame implements ActionListener,
 	/**
 	 * The initializer of the GUI. This does most of the work.
 	 */
-	public LifePathGUI(){		
+	public LifePathGUI(){
+		try {
+			UIManager.setLookAndFeel(
+			        UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {			
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 		this.setTitle("Transhuman Life Path Generator");
 		
 		// Setting up the main layout
@@ -90,6 +104,7 @@ public class LifePathGUI extends JFrame implements ActionListener,
 				
 		this.chooseSkillsButton = newCheckBox("Assign skills randomly", false);
 		this.optionsPanel.add(this.chooseSkillsButton);	
+		this.optionsPanel.add(new JLabel("  "));
 		
 		this.optionsPanel.add(new JLabel("Allowed Backgrounds"));
 		optionsPanel.setBackground(Color.WHITE);
@@ -118,7 +133,7 @@ public class LifePathGUI extends JFrame implements ActionListener,
 		this.backgroundSelect.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		
 		JScrollPane bgScroller = new JScrollPane(this.backgroundSelect);
-		bgScroller.setPreferredSize(new Dimension(150, 237));		
+		bgScroller.setPreferredSize(new Dimension(150, 210));		
 		this.optionsPanel.add(bgScroller);
 
 		this.optionsPanel.add(new JLabel(" "));
@@ -143,7 +158,7 @@ public class LifePathGUI extends JFrame implements ActionListener,
 		this.factionSelect.addListSelectionListener(this);
 		this.factionSelect.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		JScrollPane factScroller = new JScrollPane(this.factionSelect);
-		factScroller.setPreferredSize(new Dimension(150, 219));
+		factScroller.setPreferredSize(new Dimension(150, 194));
 		this.optionsPanel.add(factScroller);	
 		
 		

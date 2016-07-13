@@ -1,6 +1,7 @@
 package lifepath;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import character.EPCharacter;
 import character.Morph;
@@ -27,48 +28,31 @@ public class PathEvent {
 	protected String resleeveString = null;
 
 	
-	// Yes, I need all of these constructors. Hush.
-	public PathEvent(String f, String l){
-		this.fluff = f;
-		this.label = l;
-		this.action = ActionType.todo;
-		this.value = 0;
+	
+	public PathEvent(String fl, String la){
+		this(fl, ActionType.todo, 0, la, null);
 	}
 	public PathEvent(String f, ActionType a, String l){
-		this.fluff = f;
-		this.action = a;
-		this.label = l;
-		this.value = 0;
+		this(f, a, 0, l, null);
 	}
 	public PathEvent(String f, ActionType a){
-		this.fluff = f;
-		this.action = a;
-		this.value = 0;
-	}
-	public PathEvent(String f, ActionType a, int value, String l){
-		this.fluff = f;
-		this.label = l;
-		this.action = a;
-		this.value = value;
+		this(f, a, 0, null, null);
 	}
 	public PathEvent(String f, ActionType a, int value){
-		this.fluff = f;
-		this.action = a;
-		this.value = value;
-		this.additionalInfo = null;
+		this(f, a, value, null, null);
 	}
-	public PathEvent(String f, ActionType a, String l, String additonalInfo){
-		this.fluff = f;
-		this.action = a;
-		this.label = l;
-		this.additionalInfo = additonalInfo;
+	public PathEvent(String f, ActionType a, int value, String l){
+		this(f, a, value, l, null);
 	}
-	public PathEvent(String f, ActionType a, int value, String l, String additonalInfo){
+	public PathEvent(String f, ActionType a, String l, String additional){
+		this(f, a, 0, l, additional);
+	}
+	public PathEvent(String f, ActionType a, int value, String l, String additional){
 		this.fluff = f;
 		this.action = a;
 		this.value = value;
 		this.label = l;
-		this.additionalInfo = additonalInfo;
+		this.additionalInfo = additional;
 	}
 	
 	// The type of action. This indicates how to resolve it. Things without labels
@@ -171,25 +155,25 @@ public class PathEvent {
 			}
 			if (this.label == "Any"){
 				roll = d100.Roll();
-				m = LifePathCharts.getRandomMorph(roll);
+				m = Charts.getRandomMorph(roll);
 			} else if (this.label == "No pod"){ 
 				do {
 					roll = d100.Roll();
 				} while (roll > 55 && roll <= 65); // Pod: 56-65	
-				m = LifePathCharts.getRandomMorph(roll);
+				m = Charts.getRandomMorph(roll);
 			} else if (this.label == "No pod or uplift") {
 				do {
 					roll = d100.Roll();
 				} while (roll > 50 && roll <= 65); // Uplift: 51-55,  Pod: 56-65				
-				m = LifePathCharts.getRandomMorph(roll);
+				m = Charts.getRandomMorph(roll);
 			} else if (this.label == "Only pod or uplift"){ // 50/50
 				if (d100.Roll() <= 50){
-					m = LifePathCharts.getUplift();
+					m = Charts.getUplift();
 				} else {
-					m = LifePathCharts.getPod();
+					m = Charts.getPod();
 				}
 			} else if (this.label == "Only Synth"){
-				m = LifePathCharts.getSynthmorph();
+				m = Charts.getSynthmorph();
 			} else { // Everything else is just weird, tell player to do it manually
 				returnStr = "Roll new morph, " + this.label;
 				break;
@@ -348,15 +332,15 @@ public class PathEvent {
 		return this.toString() + "\n" + this.label + " " + this.action.name();
 	}
 
-
+	
 	// All the rest is hard-coded event tables. Good luck!
-	static final protected ArrayList<ChartEntry<PathEvent>> backgroundEvent   = new ArrayList<ChartEntry<PathEvent>>(40);
-	static final protected ArrayList<ChartEntry<PathEvent>> preFallEvent      = new ArrayList<ChartEntry<PathEvent>>(40);
-	static final protected ArrayList<ChartEntry<PathEvent>> storyEvent        = new ArrayList<ChartEntry<PathEvent>>(30);
-	static final protected ArrayList<ChartEntry<PathEvent>> fallEvent         = new ArrayList<ChartEntry<PathEvent>>(40);
-	static final protected ArrayList<ChartEntry<PathEvent>> postFallEvent     = new ArrayList<ChartEntry<PathEvent>>(80);
-	static final protected ArrayList<ChartEntry<PathEvent>> gatecrashingEvent = new ArrayList<ChartEntry<PathEvent>>(20);
-	static final protected ArrayList<ChartEntry<PathEvent>> firewallEvent     = new ArrayList<ChartEntry<PathEvent>>(20);
+	static final protected List<ChartEntry<PathEvent>> backgroundEvent   = new ArrayList<ChartEntry<PathEvent>>(40);
+	static final protected List<ChartEntry<PathEvent>> preFallEvent      = new ArrayList<ChartEntry<PathEvent>>(40);
+	static final protected List<ChartEntry<PathEvent>> storyEvent        = new ArrayList<ChartEntry<PathEvent>>(30);
+	static final protected List<ChartEntry<PathEvent>> fallEvent         = new ArrayList<ChartEntry<PathEvent>>(40);
+	static final protected List<ChartEntry<PathEvent>> postFallEvent     = new ArrayList<ChartEntry<PathEvent>>(80);
+	static final protected List<ChartEntry<PathEvent>> gatecrashingEvent = new ArrayList<ChartEntry<PathEvent>>(20);
+	static final protected List<ChartEntry<PathEvent>> firewallEvent     = new ArrayList<ChartEntry<PathEvent>>(20);
 	static 	{
 		backgroundEvent.add(new ChartEntry<PathEvent>(1,  20,  
 				new PathEvent("Story Event.", ActionType.getStoryEvent, 1, "MOX")));

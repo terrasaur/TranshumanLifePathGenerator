@@ -6,7 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-import lifepath.LifePathCharts;
+import lifepath.Charts;
 import character.EPCharacter;
 import dice.Die;
 
@@ -122,8 +122,8 @@ public class LifePath {
 		while (roll > 8){
 			roll = d10.Roll(); // 9-10 is reroll
 		}
-		this.aptTemplate = LifePathCharts.aptitudeTemplates[roll-1].name;
-		this.character.setAllAptitudes(LifePathCharts.aptitudeTemplates[roll-1].aptitudes);	
+		this.aptTemplate = Charts.aptitudeTemplates.get(roll-1).name;
+		this.character.setAllAptitudes(Charts.aptitudeTemplates.get(roll-1).aptitudes);	
 
 		
 		// Get language
@@ -150,7 +150,7 @@ public class LifePath {
 		}		
 	
 		// Resolve post-life path stuff
-		this.character.setStartingCredits(LifePathCharts.getStartingCredits(d10.Roll(), d10.Roll()));
+		this.character.setStartingCredits(Charts.getStartingCredits(d10.Roll(), d10.Roll()));
 		if (this.getFirewallEvent)
 			this.eventList.add(PathEvent.getFirewallEvent(d100.Roll()));
 		if (this.getStoryEvent)
@@ -196,7 +196,7 @@ public class LifePath {
 		// Random ones
 		for (int i = 0; i < randomMotivations; i++){
 			do {
-				s = LifePathCharts.getRandomMotivation();
+				s = Charts.getRandomMotivation();
 			} while ( this.motivations.contains(s.substring(1)));
 			this.motivations += s + ", ";
 		}		

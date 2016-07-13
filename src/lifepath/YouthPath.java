@@ -3,6 +3,8 @@ package lifepath;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import lifepath.BackgroundPackage;
 import character.Morph;
@@ -17,7 +19,7 @@ import dice.Die;
 public class YouthPath {
 	
 	// Type of background, made as an enum for the reflection stuff later on
-	protected enum BackgroundType {
+	protected static enum BackgroundType {
 		Earthborn("Earthborn"),
 		Orbital("Orbital"),
 		Lunar("Lunar"),
@@ -97,18 +99,17 @@ public class YouthPath {
 	protected boolean isAGI;
 	protected boolean isAsync;
 	
-	@SuppressWarnings("unchecked")
-	static final protected ChartEntry<BackgroundType>[] backgroundTypes = new ChartEntry[BackgroundType.values().length];
-	static 	{
-		backgroundTypes[0] =  new ChartEntry<BackgroundType>(1,  50,  BackgroundType.Earthborn);
-		backgroundTypes[1] =  new ChartEntry<BackgroundType>(51, 60,  BackgroundType.Orbital);
-		backgroundTypes[2] =  new ChartEntry<BackgroundType>(61, 68,  BackgroundType.Lunar);
-		backgroundTypes[3] =  new ChartEntry<BackgroundType>(69, 76,  BackgroundType.Martian);
-		backgroundTypes[4] =  new ChartEntry<BackgroundType>(77, 82,  BackgroundType.Sunward);
-		backgroundTypes[5] =  new ChartEntry<BackgroundType>(83, 89,  BackgroundType.Rimward);
-		backgroundTypes[6] =  new ChartEntry<BackgroundType>(90, 95,  BackgroundType.Migrant);
-		backgroundTypes[7] =  new ChartEntry<BackgroundType>(96, 100, BackgroundType.Created);
-	}
+	
+	static final protected List<ChartEntry<BackgroundType>> backgroundTypes = Arrays.asList(
+		new ChartEntry<BackgroundType>(1,  50,  BackgroundType.Earthborn),
+		new ChartEntry<BackgroundType>(51, 60,  BackgroundType.Orbital),
+		new ChartEntry<BackgroundType>(61, 68,  BackgroundType.Lunar),
+		new ChartEntry<BackgroundType>(69, 76,  BackgroundType.Martian),
+		new ChartEntry<BackgroundType>(77, 82,  BackgroundType.Sunward),
+		new ChartEntry<BackgroundType>(83, 89,  BackgroundType.Rimward),
+		new ChartEntry<BackgroundType>(90, 95,  BackgroundType.Migrant),
+		new ChartEntry<BackgroundType>(96, 100, BackgroundType.Created)
+	);
 	
 	public YouthPath() {
 		this.packages    = new ArrayList<FluffPackage>();
@@ -709,7 +710,7 @@ public class YouthPath {
 					this.startingMorph = new Morph("Bouncer");
 				} else { 
 					Die d100 = new Die(100);
-					this.startingMorph = LifePathCharts.getRandomMorph(d100.Roll());
+					this.startingMorph = Charts.getRandomMorph(d100.Roll());
 				}
 			}
 			this.pathForward = AdultPath.AdultFocus.Autonomist;
@@ -882,12 +883,12 @@ public class YouthPath {
 			}
 		} else if (roll == 9) {
 			fluff += "Second-class citizenship was not for you";
-			this.startingMorph = LifePathCharts.getUplift();
+			this.startingMorph = Charts.getUplift();
 			this.pathForward = AdultPath.AdultFocus.Civilian;
 			return new FluffPackage(new BackgroundPackage(BackgroundPackage.List.UpliftEscapee, pp), fluff);
 		} else {
 			fluff += "Living proof that uplift works";
-			this.startingMorph = LifePathCharts.getUplift();
+			this.startingMorph = Charts.getUplift();
 			this.pathForward = AdultPath.AdultFocus.Civilian;
 			return new FluffPackage(new BackgroundPackage(BackgroundPackage.List.UpliftStandardSpecimen, pp), fluff);
 		}

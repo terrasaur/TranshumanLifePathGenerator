@@ -1,7 +1,8 @@
 package lifepath;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import dice.Die;
 
@@ -26,19 +27,24 @@ import dice.Die;
  */
 public class AdultPath {
 	protected enum AdultFocus{
-		Autonomist,
-		Civilian,
-		Criminal,
-		Elite,
-		Enclaver,
-		Indenture,
-		Military,
-		Scientist,
-		Spacer,
-		Techie,
-		Mercurial,
-		New,
-		Customization;
+		Autonomist   (0),
+		Civilian     (1),
+		Criminal     (2),
+		Elite        (3),
+		Enclaver     (4),
+		Indenture    (5),
+		Military     (6),
+		Scientist    (7),
+		Spacer       (8),
+		Techie       (9),
+		Mercurial    (10),
+		New          (11),
+		Customization(12);
+		
+		int idx;
+		AdultFocus(int i){
+			this.idx = i;
+		}
 		
 		static AdultFocus getFocusByString(String s){
 			for (AdultFocus f: AdultFocus.values()){
@@ -50,7 +56,7 @@ public class AdultPath {
 		}
 
 	}
-	private AdultFocus[] focusArray = new AdultFocus[]{AdultFocus.Autonomist,
+	private static AdultFocus[] focusArray = new AdultFocus[]{AdultFocus.Autonomist,
 			AdultFocus.Civilian, AdultFocus.Criminal, AdultFocus.Elite,
 			AdultFocus.Enclaver, AdultFocus.Indenture, AdultFocus.Military,
 			AdultFocus.Scientist, AdultFocus.Spacer, AdultFocus.Techie};
@@ -171,29 +177,10 @@ public class AdultPath {
 	 */
 	private LifePathPackage getFocusPackage(AdultFocus focus, Integer roll, int pp) {
 		this.focus = focus;
-		// Get field from class using reflection
-		Class<? extends AdultPath> c = this.getClass();
-		String focusName = focus.name().toLowerCase() + "FocusArray";
-		Field f;
-		try {
-			f = c.getDeclaredField(focusName);
-			f.setAccessible(true);
-			FocusPackage.List[] focusArray = (FocusPackage.List[])f.get(this);
-			
-			// once we have the properly named array, getting the focus is easy
-			return new FocusPackage(focusArray[roll-1], pp);
-			
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
+		FocusPackage.List focusType = focusArrays.get(focus.idx).get(roll-1);
+		if (focusType == null)
+			return null;
+		return new FocusPackage(focusType, pp);	
 	}
 
 	/**
@@ -389,33 +376,11 @@ public class AdultPath {
 	 */
 	private LifePathPackage getFactionPackage(AdultFocus faction, Integer roll, int pp, boolean isUplift) {
 		this.faction = faction;
-		// Get field from class using reflection
-		Class<? extends AdultPath> c = this.getClass();
-		String factionName = faction.name().toLowerCase() + "FactionArray";
-		Field f;
-		try {
-			f = c.getDeclaredField(factionName);
-			f.setAccessible(true);
-			FactionPackage.List[] factionArray = (FactionPackage.List[])f.get(this);
-			
-			// once we have the properly named array, getting the focus is easy
-			FactionPackage.List result = factionArray[roll-1];
-			if (isUplift && result == FactionPackage.List.MercurialInfolife){
-				result = FactionPackage.List.MercurialUplift;
-			}
-			return new FactionPackage(result , pp);	
-			
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
+		if (faction.idx >= factionArrays.size()) // you have an invalid faction
+			return null;
 		
-		return null;
+		FactionPackage.List factionType = factionArrays.get(faction.idx).get(roll-1);
+		return new FactionPackage(factionType , pp);
 	}
 	
 	/**
@@ -471,162 +436,145 @@ public class AdultPath {
 		}
 	}
 	
-	static final protected ArrayList<ChartEntry<CustomizationPackage.List>> customizationPackages = 
-	new ArrayList<ChartEntry<CustomizationPackage.List>>(22);
-	static 	{
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(1,  4,  
-				CustomizationPackage.List.Artist));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(5,  8,  
-				CustomizationPackage.List.Async));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(9,  12, 
-				CustomizationPackage.List.AsyncAdept));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(13, 16, 
-				CustomizationPackage.List.Athletics));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(17, 20, 
-				CustomizationPackage.List.ComputerTraining));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(21, 24, 
-				CustomizationPackage.List.Connected));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(25, 28, 
-				CustomizationPackage.List.Gearhead));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(29, 32, 
-				CustomizationPackage.List.HeavyWeapons));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(33, 39, 
-				CustomizationPackage.List.JackOfAllTrades));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(40, 46, 
-				CustomizationPackage.List.Lucky));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(47, 50, 
-				CustomizationPackage.List.MartialArts));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(51, 54, 
-				CustomizationPackage.List.Mentalist));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(55, 61, 
-				CustomizationPackage.List.Networker));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(62, 65, 
-				CustomizationPackage.List.Paramedic));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(66, 69, 
-				CustomizationPackage.List.Slacker));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(70, 73, 
-				CustomizationPackage.List.Sneaker));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(74, 77, 
-				CustomizationPackage.List.SocialButterfly));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(78, 81, 
-				CustomizationPackage.List.Spacer));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(82, 85, 
-				CustomizationPackage.List.Student));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(86, 89, 
-				CustomizationPackage.List.SurvivalTraining));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(90, 93, 
-				CustomizationPackage.List.TechTraining));
-		customizationPackages.add(new ChartEntry<CustomizationPackage.List>(94, 100,
-				CustomizationPackage.List.WeaponsTraining));
+	private static ChartEntry<CustomizationPackage.List> newCE_CP (Integer min, Integer max,
+			CustomizationPackage.List entry){
+		return new ChartEntry<CustomizationPackage.List>(min, max, entry);
 	}
 	
-	// Because I wanted to be fancy and use reflection, I have to do all these @SuppressWarnings.
-	@SuppressWarnings("unused")
-	private FocusPackage.List[] autonomistFocusArray = new FocusPackage.List[]{ FocusPackage.List.Academic, 
-		 FocusPackage.List.Activist, FocusPackage.List.BotJammer, FocusPackage.List.CovertOps, 
-		 FocusPackage.List.Explorer, FocusPackage.List.Genehacker, FocusPackage.List.Hacker, 
-		 FocusPackage.List.Medic, FocusPackage.List.Scientist, FocusPackage.List.Techie};
-	@SuppressWarnings("unused")
-	private FocusPackage.List[] civilianFocusArray = new FocusPackage.List[]{FocusPackage.List.Activist, 
-		FocusPackage.List.ConArtist, FocusPackage.List.Dealer, FocusPackage.List.Face, 
-		FocusPackage.List.Investigator, FocusPackage.List.Journo, FocusPackage.List.SmartAnimalHandler, 
-		FocusPackage.List.Soldier, FocusPackage.List.Techie, FocusPackage.List.Thief};
-	@SuppressWarnings("unused")
-	private FocusPackage.List[] criminalFocusArray = new FocusPackage.List[]{FocusPackage.List.Assassin, 
-		FocusPackage.List.ConArtist, FocusPackage.List.CovertOps, FocusPackage.List.Dealer, 
-		FocusPackage.List.EgoHunter, FocusPackage.List.Enforcer, FocusPackage.List.Hacker, 
-		FocusPackage.List.Pirate, FocusPackage.List.Smuggler, FocusPackage.List.Thief};
-	@SuppressWarnings("unused")
-	private FocusPackage.List[] eliteFocusArray = new FocusPackage.List[]{FocusPackage.List.Academic, 
-		FocusPackage.List.Dealer, FocusPackage.List.Face, FocusPackage.List.Face, FocusPackage.List.Icon, 
-		FocusPackage.List.Icon, FocusPackage.List.Journo, FocusPackage.List.Medic, 
-		FocusPackage.List.Psychosurgeon, FocusPackage.List.Scientist};
-	@SuppressWarnings("unused")
-	private FocusPackage.List[] enclaverFocusArray = new FocusPackage.List[]{FocusPackage.List.Academic, 
-		FocusPackage.List.ConArtist, FocusPackage.List.Dealer, FocusPackage.List.Dealer, FocusPackage.List.Face, 
-		FocusPackage.List.Icon, FocusPackage.List.Investigator, FocusPackage.List.Journo, 
-		FocusPackage.List.Medic, FocusPackage.List.Psychosurgeon };
-	@SuppressWarnings("unused")
-	private FocusPackage.List[] indentureFocusArray = new FocusPackage.List[]{FocusPackage.List.Activist, 
-		FocusPackage.List.Bodyguard, FocusPackage.List.BotJammer, FocusPackage.List.ConArtist, 
-		FocusPackage.List.Enforcer, FocusPackage.List.Pirate, FocusPackage.List.Scavenger, 
-		FocusPackage.List.SmartAnimalHandler, FocusPackage.List.Smuggler, FocusPackage.List.Thief};
-	@SuppressWarnings("unused")
-	private FocusPackage.List[] militaryFocusArray = new FocusPackage.List[]{FocusPackage.List.Assassin, 
-		FocusPackage.List.Bodyguard, FocusPackage.List.CovertOps, FocusPackage.List.EgoHunter, 
-		FocusPackage.List.Enforcer, FocusPackage.List.Investigator, FocusPackage.List.Soldier, 
-		FocusPackage.List.Soldier, FocusPackage.List.Soldier, FocusPackage.List.Spy};
-	@SuppressWarnings("unused")
-	private FocusPackage.List[] scientistFocusArray = new FocusPackage.List[]{FocusPackage.List.Academic, 
-		FocusPackage.List.Explorer, FocusPackage.List.Genehacker, FocusPackage.List.Investigator, 
-		FocusPackage.List.Medic, FocusPackage.List.Psychosurgeon, FocusPackage.List.Scientist,
-		FocusPackage.List.Scientist, FocusPackage.List.SmartAnimalHandler, FocusPackage.List.Techie};
-	@SuppressWarnings("unused")
-	private FocusPackage.List[] spacerFocusArray = new FocusPackage.List[]{FocusPackage.List.BotJammer, 
-		FocusPackage.List.EgoHunter, FocusPackage.List.Explorer, FocusPackage.List.Explorer, 
-		FocusPackage.List.Pirate, FocusPackage.List.Scavenger, FocusPackage.List.Soldier,
-		FocusPackage.List.Smuggler, FocusPackage.List.Smuggler, FocusPackage.List.Spy};
-	@SuppressWarnings("unused")
-	private FocusPackage.List[] techieFocusArray = new FocusPackage.List[]{FocusPackage.List.BotJammer, 
-		FocusPackage.List.Explorer, FocusPackage.List.Genehacker, FocusPackage.List.Hacker, 
-		FocusPackage.List.Hacker, FocusPackage.List.Scavenger, FocusPackage.List.Scientist, 
-		FocusPackage.List.Spy, FocusPackage.List.Techie, FocusPackage.List.Techie};
+	static final protected List<ChartEntry<CustomizationPackage.List>> customizationPackages = Arrays.asList(
+			newCE_CP( 1,  4, CustomizationPackage.List.Artist),
+			newCE_CP( 5,  8, CustomizationPackage.List.Async),
+			newCE_CP( 9, 12, CustomizationPackage.List.AsyncAdept),
+			newCE_CP(13, 16, CustomizationPackage.List.Athletics),
+			newCE_CP(17, 20, CustomizationPackage.List.ComputerTraining),
+			newCE_CP(21, 24, CustomizationPackage.List.Connected),
+			newCE_CP(25, 28, CustomizationPackage.List.Gearhead),
+			newCE_CP(29, 32, CustomizationPackage.List.HeavyWeapons),
+			newCE_CP(33, 39, CustomizationPackage.List.JackOfAllTrades),
+			newCE_CP(40, 46, CustomizationPackage.List.Lucky),
+			newCE_CP(47, 50, CustomizationPackage.List.MartialArts),
+			newCE_CP(51, 54, CustomizationPackage.List.Mentalist),
+			newCE_CP(55, 61, CustomizationPackage.List.Networker),
+			newCE_CP(62, 65, CustomizationPackage.List.Paramedic),
+			newCE_CP(66, 69, CustomizationPackage.List.Slacker),
+			newCE_CP(70, 73, CustomizationPackage.List.Sneaker),
+			newCE_CP(74, 77, CustomizationPackage.List.SocialButterfly),
+			newCE_CP(78, 81, CustomizationPackage.List.Spacer),
+			newCE_CP(82, 85, CustomizationPackage.List.Student),
+			newCE_CP(86, 89, CustomizationPackage.List.SurvivalTraining),
+			newCE_CP(90, 93, CustomizationPackage.List.TechTraining),
+			newCE_CP(94, 100,CustomizationPackage.List.WeaponsTraining));
 	
-	@SuppressWarnings("unused")
-	private FactionPackage.List[] autonomistFactionArray = new FactionPackage.List[]{FactionPackage.List.Anarchist, 
-		FactionPackage.List.Argonaut, FactionPackage.List.Barsoomian, FactionPackage.List.Brinker, 
-		FactionPackage.List.Criminal, FactionPackage.List.Europan, FactionPackage.List.Extropian, 
-		FactionPackage.List.Ringer, FactionPackage.List.Scum, FactionPackage.List.Titanian};
-	@SuppressWarnings("unused")
-	private FactionPackage.List[] civilianFactionArray = new FactionPackage.List[]{FactionPackage.List.Belter, 
-		FactionPackage.List.Bioconservative, FactionPackage.List.Criminal, FactionPackage.List.Hypercorp, 
-		FactionPackage.List.Lunar, FactionPackage.List.Orbital, FactionPackage.List.Reclaimer, FactionPackage.List.Sifter, 
-		FactionPackage.List.Skimmer, FactionPackage.List.Titanian};
-	@SuppressWarnings("unused")
-	private FactionPackage.List[] criminalFactionArray = new FactionPackage.List[]{FactionPackage.List.Anarchist, 
-		FactionPackage.List.Belter, FactionPackage.List.Brinker, FactionPackage.List.Criminal, 
-		FactionPackage.List.Exhuman, FactionPackage.List.Extropian, FactionPackage.List.Lunar, 
-		FactionPackage.List.Orbital, FactionPackage.List.Ringer, FactionPackage.List.Scum};
-	@SuppressWarnings("unused")
-	private FactionPackage.List[] eliteFactionArray = new FactionPackage.List[]{FactionPackage.List.Bioconservative, 
-		FactionPackage.List.Brinker, FactionPackage.List.Exhuman, FactionPackage.List.Extropian, 
-		FactionPackage.List.Hypercorp, FactionPackage.List.Orbital, FactionPackage.List.Socialite, 
-		FactionPackage.List.Precautionist, FactionPackage.List.Ultimate, FactionPackage.List.Venusian};
-	@SuppressWarnings("unused")
-	private FactionPackage.List[] enclaverFactionArray = new FactionPackage.List[]{FactionPackage.List.Bioconservative, 
-		FactionPackage.List.Extropian, FactionPackage.List.Hypercorp, FactionPackage.List.Jovian, 
-		FactionPackage.List.Lunar, FactionPackage.List.Orbital, FactionPackage.List.Socialite, 
-		FactionPackage.List.Preservationist, FactionPackage.List.Reclaimer, FactionPackage.List.Venusian};
-	@SuppressWarnings("unused")
-	private FactionPackage.List[] indentureFactionArray = new FactionPackage.List[]{FactionPackage.List.Anarchist, 
-		FactionPackage.List.Barsoomian, FactionPackage.List.Hypercorp, FactionPackage.List.Lunar, 
-		FactionPackage.List.Scum, FactionPackage.List.Preservationist, FactionPackage.List.Reclaimer, 
-		FactionPackage.List.Sifter, FactionPackage.List.Skimmer, FactionPackage.List.Venusian};
-	@SuppressWarnings("unused")
-	private FactionPackage.List[] militaryFactionArray = new FactionPackage.List[]{FactionPackage.List.Bioconservative, 
-		FactionPackage.List.Brinker, FactionPackage.List.Criminal, FactionPackage.List.Hypercorp, 
-		FactionPackage.List.Jovian, FactionPackage.List.Lunar, FactionPackage.List.Orbital, FactionPackage.List.Reclaimer, 
-		FactionPackage.List.Precautionist, FactionPackage.List.Ultimate};
-	@SuppressWarnings("unused")
-	private FactionPackage.List[] scientistFactionArray = new FactionPackage.List[]{FactionPackage.List.Argonaut, 
-		FactionPackage.List.Europan, FactionPackage.List.Exhuman, FactionPackage.List.Hypercorp, 
-		FactionPackage.List.NanoEcologist, FactionPackage.List.Precautionist, FactionPackage.List.SingularitySeeker, 
-		FactionPackage.List.Solarian, FactionPackage.List.Titanian, FactionPackage.List.Venusian};
-	@SuppressWarnings("unused")
-	private FactionPackage.List[] spacerFactionArray = new FactionPackage.List[]{FactionPackage.List.Belter, 
-		FactionPackage.List.Brinker, FactionPackage.List.Criminal, FactionPackage.List.Extropian, 
-		FactionPackage.List.Outster, FactionPackage.List.Scum, FactionPackage.List.Ringer, 
-		FactionPackage.List.SingularitySeeker, FactionPackage.List.Skimmer, FactionPackage.List.Solarian};
-	@SuppressWarnings("unused")
-	private FactionPackage.List[] techieFactionArray = new FactionPackage.List[]{FactionPackage.List.Anarchist, 
-		FactionPackage.List.Argonaut, FactionPackage.List.Barsoomian, FactionPackage.List.Extropian, 
-		FactionPackage.List.Hypercorp, FactionPackage.List.NanoEcologist, FactionPackage.List.Sifter, 
-		FactionPackage.List.SingularitySeeker, FactionPackage.List.Titanian, FactionPackage.List.Venusian};
-	@SuppressWarnings("unused")
-	private FactionPackage.List[] mercurialFactionArray = new FactionPackage.List[]{FactionPackage.List.Anarchist, 
-		FactionPackage.List.Argonaut, FactionPackage.List.Brinker, FactionPackage.List.Criminal, 
-		FactionPackage.List.Europan, FactionPackage.List.Hypercorp, FactionPackage.List.MercurialInfolife, 
-		FactionPackage.List.Sapient, FactionPackage.List.Solarian, FactionPackage.List.Venusian};
-
+	private static List<List<FocusPackage.List>> focusArrays = Arrays.asList(
+			// autonomist
+			Arrays.asList(FocusPackage.List.Academic,  FocusPackage.List.Activist, FocusPackage.List.BotJammer, 
+					FocusPackage.List.CovertOps,  FocusPackage.List.Explorer, FocusPackage.List.Genehacker, 
+					FocusPackage.List.Hacker,  FocusPackage.List.Medic, FocusPackage.List.Scientist, 
+					FocusPackage.List.Techie),
+			//civilian
+			Arrays.asList(FocusPackage.List.Activist, FocusPackage.List.ConArtist, FocusPackage.List.Dealer,
+					FocusPackage.List.Face, FocusPackage.List.Investigator, FocusPackage.List.Journo, 
+					FocusPackage.List.SmartAnimalHandler, FocusPackage.List.Soldier, FocusPackage.List.Techie,
+					FocusPackage.List.Thief),
+			//criminal
+			Arrays.asList(FocusPackage.List.Assassin, FocusPackage.List.ConArtist, FocusPackage.List.CovertOps, 
+					FocusPackage.List.Dealer, FocusPackage.List.EgoHunter, FocusPackage.List.Enforcer, 
+					FocusPackage.List.Hacker, FocusPackage.List.Pirate, FocusPackage.List.Smuggler, 
+					FocusPackage.List.Thief),
+			//elite
+			Arrays.asList(FocusPackage.List.Academic, FocusPackage.List.Dealer, FocusPackage.List.Face, 
+					FocusPackage.List.Face, FocusPackage.List.Icon, FocusPackage.List.Icon, 
+					FocusPackage.List.Journo, FocusPackage.List.Medic, 	FocusPackage.List.Psychosurgeon, 
+					FocusPackage.List.Scientist),
+			//enclaver
+			Arrays.asList(FocusPackage.List.Academic, FocusPackage.List.ConArtist, FocusPackage.List.Dealer, 
+					FocusPackage.List.Dealer, FocusPackage.List.Face, FocusPackage.List.Icon,
+					FocusPackage.List.Investigator, FocusPackage.List.Journo, FocusPackage.List.Medic, 
+					FocusPackage.List.Psychosurgeon),
+			//indenture
+			Arrays.asList(FocusPackage.List.Activist, FocusPackage.List.Bodyguard, FocusPackage.List.BotJammer, 
+					FocusPackage.List.ConArtist, FocusPackage.List.Enforcer, FocusPackage.List.Pirate, 
+					FocusPackage.List.Scavenger, FocusPackage.List.SmartAnimalHandler, 
+					FocusPackage.List.Smuggler, FocusPackage.List.Thief),
+			//military
+			Arrays.asList(FocusPackage.List.Assassin, FocusPackage.List.Bodyguard, FocusPackage.List.CovertOps,
+					FocusPackage.List.EgoHunter, FocusPackage.List.Enforcer, FocusPackage.List.Investigator,
+					FocusPackage.List.Soldier, FocusPackage.List.Soldier, FocusPackage.List.Soldier,
+					FocusPackage.List.Spy),
+			//scientist
+			Arrays.asList(FocusPackage.List.Academic, FocusPackage.List.Explorer, FocusPackage.List.Genehacker,
+					FocusPackage.List.Investigator, FocusPackage.List.Medic, FocusPackage.List.Psychosurgeon, 
+					FocusPackage.List.Scientist, FocusPackage.List.Scientist, 
+					FocusPackage.List.SmartAnimalHandler, FocusPackage.List.Techie),
+			//spacer
+			Arrays.asList(FocusPackage.List.BotJammer, FocusPackage.List.EgoHunter, FocusPackage.List.Explorer,
+					FocusPackage.List.Explorer, FocusPackage.List.Pirate, FocusPackage.List.Scavenger, 
+					FocusPackage.List.Soldier, FocusPackage.List.Smuggler, FocusPackage.List.Smuggler, 
+					FocusPackage.List.Spy),
+			//techie
+			Arrays.asList(FocusPackage.List.BotJammer, FocusPackage.List.Explorer, FocusPackage.List.Genehacker, 
+					FocusPackage.List.Hacker, FocusPackage.List.Hacker, FocusPackage.List.Scavenger, 
+					FocusPackage.List.Scientist, FocusPackage.List.Spy, FocusPackage.List.Techie,
+					FocusPackage.List.Techie)); // no mercurial
+	
+	
+	private static List<List<FactionPackage.List>> factionArrays = Arrays.asList(
+			//autonomist
+			Arrays.asList(FactionPackage.List.Anarchist, FactionPackage.List.Argonaut, 
+					FactionPackage.List.Barsoomian, FactionPackage.List.Brinker, FactionPackage.List.Criminal, 
+					FactionPackage.List.Europan, FactionPackage.List.Extropian, FactionPackage.List.Ringer, 
+					FactionPackage.List.Scum, FactionPackage.List.Titanian),
+			// civilian
+			Arrays.asList(FactionPackage.List.Belter, FactionPackage.List.Bioconservative, 
+					FactionPackage.List.Criminal, FactionPackage.List.Hypercorp, FactionPackage.List.Lunar, 
+					FactionPackage.List.Orbital, FactionPackage.List.Reclaimer, FactionPackage.List.Sifter, 
+					FactionPackage.List.Skimmer, FactionPackage.List.Titanian),
+			//criminal
+			Arrays.asList(FactionPackage.List.Anarchist, FactionPackage.List.Belter, FactionPackage.List.Brinker,
+					FactionPackage.List.Criminal, FactionPackage.List.Exhuman, FactionPackage.List.Extropian, 
+					FactionPackage.List.Lunar, FactionPackage.List.Orbital, FactionPackage.List.Ringer,
+					FactionPackage.List.Scum),
+			//elite
+			Arrays.asList(FactionPackage.List.Bioconservative, FactionPackage.List.Brinker, 
+					FactionPackage.List.Exhuman, FactionPackage.List.Extropian, FactionPackage.List.Hypercorp, 
+					FactionPackage.List.Orbital, FactionPackage.List.Socialite, FactionPackage.List.Precautionist,
+					FactionPackage.List.Ultimate, FactionPackage.List.Venusian),
+			//enclaver
+			Arrays.asList(FactionPackage.List.Bioconservative, FactionPackage.List.Extropian, 
+					FactionPackage.List.Hypercorp, FactionPackage.List.Jovian, FactionPackage.List.Lunar, 
+					FactionPackage.List.Orbital, FactionPackage.List.Socialite, 
+					FactionPackage.List.Preservationist, FactionPackage.List.Reclaimer, 
+					FactionPackage.List.Venusian),
+			//indenture
+			Arrays.asList(FactionPackage.List.Anarchist, FactionPackage.List.Barsoomian, 
+					FactionPackage.List.Hypercorp, FactionPackage.List.Lunar, FactionPackage.List.Scum, 
+					FactionPackage.List.Preservationist, FactionPackage.List.Reclaimer, 
+					FactionPackage.List.Sifter, FactionPackage.List.Skimmer, FactionPackage.List.Venusian),
+			//military
+			Arrays.asList(FactionPackage.List.Bioconservative, FactionPackage.List.Brinker, 
+					FactionPackage.List.Criminal, FactionPackage.List.Hypercorp, FactionPackage.List.Jovian, 
+					FactionPackage.List.Lunar, FactionPackage.List.Orbital, FactionPackage.List.Reclaimer, 
+					FactionPackage.List.Precautionist, FactionPackage.List.Ultimate),
+			//scientist
+			Arrays.asList(FactionPackage.List.Argonaut, FactionPackage.List.Europan, FactionPackage.List.Exhuman,
+					FactionPackage.List.Hypercorp, FactionPackage.List.NanoEcologist, 
+					FactionPackage.List.Precautionist, FactionPackage.List.SingularitySeeker, 
+					FactionPackage.List.Solarian, FactionPackage.List.Titanian, FactionPackage.List.Venusian),
+			//spacer
+			Arrays.asList(FactionPackage.List.Belter, FactionPackage.List.Brinker, FactionPackage.List.Criminal, 
+					FactionPackage.List.Extropian, FactionPackage.List.Outster, FactionPackage.List.Scum,
+					FactionPackage.List.Ringer, FactionPackage.List.SingularitySeeker, 
+					FactionPackage.List.Skimmer, FactionPackage.List.Solarian),
+			//technie
+			Arrays.asList(FactionPackage.List.Anarchist, FactionPackage.List.Argonaut, 
+					FactionPackage.List.Barsoomian, FactionPackage.List.Extropian, FactionPackage.List.Hypercorp,
+					FactionPackage.List.NanoEcologist, FactionPackage.List.Sifter, 
+					FactionPackage.List.SingularitySeeker, FactionPackage.List.Titanian, 
+					FactionPackage.List.Venusian),
+			//mercurial
+			Arrays.asList(FactionPackage.List.Anarchist, FactionPackage.List.Argonaut, 
+					FactionPackage.List.Brinker, FactionPackage.List.Criminal, FactionPackage.List.Europan, 
+					FactionPackage.List.Hypercorp, FactionPackage.List.MercurialInfolife, 
+					FactionPackage.List.Sapient, FactionPackage.List.Solarian, FactionPackage.List.Venusian));
 
 }

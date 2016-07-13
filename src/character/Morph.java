@@ -51,7 +51,7 @@ public class Morph {
 	protected boolean hasStructuralEnhancement = false;
 	
 	
-	public enum MorphType{
+	public static enum MorphType{
 		biomorph,
 		pod,
 		uplift,
@@ -64,7 +64,7 @@ public class Morph {
 	 * durability. Will eventually add stats, but since you get to choose your
 	 * bonuses I'm putting it off for now.
 	 */
-	static protected enum MorphList{
+	protected static enum MorphList{
 		Flat          ("Flat",             0, MorphType.biomorph, 30, 6),
 		Splicer       ("Splicer",         10, MorphType.biomorph, 30, 6),
 		Exalt         ("Exalt",           30, MorphType.biomorph, 35, 7),

@@ -1,7 +1,7 @@
 package character;
 
 import java.util.ArrayList;
-
+import java.util.Arrays;
 
 
 import character.Gear.GearCosts;
@@ -9,7 +9,7 @@ import character.Gear.GearTypes;
 
 public class Implant {
 	
-	enum ImplantType {
+	static enum ImplantType {
 		Standard("Standard Augmentations"),
 		Bioware("Bioware"), 
 		Cyberware("Cyberware"),
@@ -85,7 +85,7 @@ public class Implant {
 
 
 
-	enum ImplantList {		
+	static enum ImplantList {		
 		BasicBiomods    ("Basic Biomods",      GearCosts.Moderate, ImplantType.Standard),
 		BasicMeshInserts("Basic Mesh Inserts", GearCosts.Moderate, ImplantType.Standard),
 		CorticalStack   ("Cortical Stack",     GearCosts.Moderate, ImplantType.Standard),
@@ -111,7 +111,7 @@ public class Implant {
 		Claws                ("Claws",                   GearCosts.Low,       ImplantType.Bioware),
 		CleanMetabolism      ("Clean Metabolism",        GearCosts.Moderate,  ImplantType.Bioware),
 		DrugGlands           ("Drug Glands",             null,                ImplantType.Bioware, 
-				Gear.getGearFromSubtype(new GearTypes[]{GearTypes.ConventionalDrugs, GearTypes.PsiDrugs})),
+				Gear.getGearFromSubtype(Arrays.asList(GearTypes.ConventionalDrugs, GearTypes.PsiDrugs))),
 		Eelware              ("Eelware",                 GearCosts.Low,       ImplantType.Bioware),
 		EmotionalDampers     ("Emotional Dampers",       GearCosts.Low,       ImplantType.Bioware),
 		EndocrineControl     ("Endocrine Control",       GearCosts.High,      ImplantType.Bioware),
@@ -124,7 +124,7 @@ public class Implant {
 		NeurachemL1          ("Neurachem (L1)",          GearCosts.High,      ImplantType.Bioware),
 		NeurachemL2          ("Neurachem (L2)",          GearCosts.Expensive, ImplantType.Bioware),
 		PoisonGlands         ("Poison Glands",           null,                ImplantType.Bioware, 
-				Gear.getGearFromSubtype(new GearTypes[]{GearTypes.Toxins})),
+				Gear.getGearFromSubtype(Arrays.asList(GearTypes.Toxins))),
 		PrehensileFeet       ("Prehensile Feet",         GearCosts.Low,       ImplantType.Bioware),
 		PrehensileTail       ("Prehensile Tail",         GearCosts.Low,       ImplantType.Bioware),
 		SexSwitch            ("Sex Switch",              GearCosts.Moderate,  ImplantType.Bioware),
@@ -179,7 +179,7 @@ public class Implant {
 		PossumCache         ("Possum Cache",          GearCosts.Low,       ImplantType.Cyberware),
 		
 		ImplantedNanotoxin ("Implanted Nanotoxin",    null,                ImplantType.Nanoware,
-				Gear.getGearFromSubtype(new GearTypes[]{GearTypes.Nanotoxins, GearTypes.Nanodrugs})),
+				Gear.getGearFromSubtype(Arrays.asList(GearTypes.Nanotoxins, GearTypes.Nanodrugs))),
 		Medichines         ("Medichines",             GearCosts.Low,       ImplantType.Nanoware),
 		MentalSpeed        ("Mental Speed",           GearCosts.High,      ImplantType.Nanoware),
 		Nanophage          ("Nanophage",              GearCosts.Moderate,  ImplantType.Nanoware),
@@ -257,7 +257,7 @@ public class Implant {
 		SmartSwarm        ("Smart Swarm",         GearCosts.High,      ImplantType.Robotic),
 		SoundSystem       ("Sound System",        GearCosts.Trivial,   ImplantType.Robotic),
 		ImplantedArmor    ("Implanted Armor",     null,                ImplantType.Robotic,
-				Gear.getGearFromSubtype(new GearTypes[]{GearTypes.Armor})),
+				Gear.getGearFromSubtype(Arrays.asList(GearTypes.Armor))),
 		
 		Autodelete     ("Autodelete",       GearCosts.Low,       ImplantType.Software),
 		Copylock       ("Copylock",         GearCosts.Low,       ImplantType.Software),
@@ -328,6 +328,10 @@ public class Implant {
 		//System.out.println(drugsArray);
 		Implant a = new Implant("Drug Glands", "Klar");
 		System.out.println(a);
+		
+		ArrayList<Gear> gearList = Gear.getGearFromSubtype(
+				Arrays.asList(GearTypes.Armor, GearTypes.Toxins));
+		System.out.println(gearList);
 	}
 
 

@@ -1,6 +1,6 @@
 package lifepath;
 
-import java.util.ArrayList;
+import java.util.List;
 
 class ChartEntry<T> {
 
@@ -52,6 +52,13 @@ class ChartEntry<T> {
 		return this.rollMin + "-" + this.rollMax + ": " + this.object.toString();
 	}
 	
+	/**
+	 * Gets a result given a roll. Loops through the array and compares the roll 
+	 * result to the min and max of the chart entry
+	 * @param chart The chart to loop through
+	 * @param roll The roll (1-100)
+	 * @return The chart entry object
+	 */
 	static <T> T findResult(ChartEntry<T>[] chart, Integer roll){
 		for (int i = 0; i < chart.length; i++){
 			if (chart[i] == null){
@@ -63,7 +70,15 @@ class ChartEntry<T> {
 		}
 		return null;		
 	}
-	public static <T> T findResult(ArrayList<ChartEntry<T>> chart, Integer roll) {
+	
+	/**
+	 * Gets a result given a roll. Loops through the array and compares the roll 
+	 * result to the min and max of the chart entry
+	 * @param chart The chart to loop through
+	 * @param roll The roll (1-100)
+	 * @return The chart entry object
+	 */
+	public static <T> T findResult(List<ChartEntry<T>> chart, Integer roll) {
 		for (int i = 0; i < chart.size(); i++){
 			if (chart.get(i).equals(roll)){
 				return chart.get(i).object;
@@ -72,4 +87,5 @@ class ChartEntry<T> {
 		return null;
 	}
 	
+
 }

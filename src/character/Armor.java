@@ -15,7 +15,7 @@ public class Armor extends Gear {
 
 	//armorList\.add\(new Armor\("([A-Za-z \)\(]+)", (GearCosts\.[A-Za-z]+)\)\);\R
 	
-	protected enum ArmorList{
+	protected static enum ArmorList{
 		ArmorClothing        ("Armor Clothing",           GearCosts.Trivial,    3,  4),
 		ArmorVest            ("Armor Vest",               GearCosts.Low,        6,  6),
 		BattlesuitExoskeleton("Battlesuit Exoskeleton",   GearCosts.Expensive, 21, 21),

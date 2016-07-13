@@ -181,7 +181,7 @@ public abstract class LifePathPackage {
 						boolean addedUniqueDisorder = false;
 						do {
 							addedUniqueDisorder = c.addTrait(
-									LifePathCharts.getMentalDisorder(c.getPsiRating() > 0));
+									Charts.getMentalDisorder(c.getPsiRating() > 0));
 						} while (addedUniqueDisorder == false);
 					}
 				} else {
@@ -194,7 +194,7 @@ public abstract class LifePathPackage {
 				continue;
 			}
 			if (stat.label == "Choose Rep"){
-				stat.label = LifePathCharts.getRandomRepGroup();
+				stat.label = Charts.getRandomRepGroup();
 			}
 			if ( c.modifyStat(stat.label, stat.bonus) == -1){
 				System.out.println("Error attempting to add stat " + stat.label);
@@ -236,11 +236,11 @@ public abstract class LifePathPackage {
 			boolean addedUniqueSleight = false;
 			do {
 				if (type == "psi-chi")
-					addedUniqueSleight = c.addSleight(LifePathCharts.getPsiChiSleight());
+					addedUniqueSleight = c.addSleight(Charts.getPsiChiSleight());
 				else if (type == "psi-gamma")
-					addedUniqueSleight = c.addSleight(LifePathCharts.getPsiGammaSleight());
+					addedUniqueSleight = c.addSleight(Charts.getPsiGammaSleight());
 				else
-					addedUniqueSleight = c.addSleight(LifePathCharts.getPsiSleight(c.getPsiRating()));					
+					addedUniqueSleight = c.addSleight(Charts.getPsiSleight(c.getPsiRating()));					
 			} while (addedUniqueSleight == false);
 		}
 	}
