@@ -1,7 +1,5 @@
 package lifepath;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,8 +15,7 @@ import dice.Die;
  *
  */
 public class YouthPath {
-	
-	// Type of background, made as an enum for the reflection stuff later on
+		
 	protected static enum BackgroundType {
 		Earthborn("Earthborn"),
 		Orbital("Orbital"),
@@ -266,33 +263,39 @@ public class YouthPath {
 	 * Also updates this.bgFluff with a fluff string. If you discard the package, clean this up.
 	 */
 	private FluffPackage getOnePackage(BackgroundType type, Integer pp){
-		Class<? extends YouthPath> c = this.getClass();
-		Object obj = this;
 		FluffPackage p = null;
-		Class<?>[] args = new Class[1];
-		args[0] = Integer.class;
+		switch(type){
+		case Colonist:
+			p = getColonistYouth("", pp);
+			break;
+		case Created:
+			p = getCreatedYouth(pp);
+			break;
+		case Earthborn:
+			p = getEarthbornYouth(pp);
+			break;
+		case Lunar:
+			p = getLunarYouth(pp);
+			break;
+		case Martian:
+			p = getMartianYouth(pp);
+			break;
+		case Migrant:
+			p = getMigrantYouth(pp);
+			break;
+		case Orbital:
+			p = getOrbitalYouth(pp);
+			break;
+		case Rimward:
+			p = getRimwardYouth(pp);
+			break;
+		case Sunward:
+			p = getSunwardYouth(pp);
+			break;
+		default:
+			break;
+		}
 		
-		String methodName = "get" + type.name() + "Youth";	
-		if (type == BackgroundType.Colonist){
-			//System.out.println("Error: Cannot get Colonist background through getOnePackage()");
-			return this.getColonistYouth("", pp);
-		}
-
-		try {
-			Method method = c.getDeclaredMethod(methodName, args);
-			p = (FluffPackage) method.invoke(obj, pp);
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
-	
 		return p;
 	}
 
@@ -303,7 +306,7 @@ public class YouthPath {
 	 * starting morph and path forward as well.
 	 * @param pp Package Point cost of the package in question
 	 * @return the package it found
-	 */@SuppressWarnings("unused")
+	 */
 	private FluffPackage getEarthbornYouth(Integer pp){
 		Die d10 = new Die(10);
 		int roll = d10.Roll();
@@ -383,7 +386,6 @@ public class YouthPath {
 	 * Sets Starting Morph if none is set, overwrites Path Forward regardless
 	 * Adds a string to bgFluff explaining the roll.
 	 */
-	@SuppressWarnings("unused")
 	private FluffPackage getOrbitalYouth(Integer pp){
 		Die d10 = new Die(10);
 		int roll = d10.Roll();
@@ -447,8 +449,7 @@ public class YouthPath {
 	 * @return Lunar (or possibly Colonial) package.
 	 * Sets Starting Morph if none is set, overwrites Path Forward regardless
 	 * Adds a string to bgFluff explaining the roll.
-	 */
-	@SuppressWarnings("unused")
+	 */	
 	private FluffPackage getLunarYouth(Integer pp){
 		String fluff = "Lunar: ";
 		Die d10 = new Die(10);
@@ -507,7 +508,6 @@ public class YouthPath {
 	 * Sets Starting Morph if none is set, overwrites Path Forward regardless
 	 * Adds a string to bgFluff explaining the roll.
 	 */
-	@SuppressWarnings("unused")
 	private FluffPackage getMartianYouth(Integer pp){
 		String fluff = "Martian: ";
 		Die d10 = new Die(10);
@@ -567,7 +567,6 @@ public class YouthPath {
 	 * Sets Starting Morph if none is set, overwrites Path Forward regardless
 	 * Adds a string to bgFluff explaining the roll.
 	 */
-	@SuppressWarnings("unused")
 	private FluffPackage getSunwardYouth(Integer pp){
 		String fluff = "Sunward: ";
 		Die d10 = new Die(10);
@@ -611,7 +610,6 @@ public class YouthPath {
 	 * Sets Starting Morph if none is set, overwrites Path Forward regardless
 	 * Adds a string to bgFluff explaining the roll.
 	 */
-	@SuppressWarnings("unused")
 	private FluffPackage getRimwardYouth(Integer pp){
 		String fluff = "Rimward: ";
 		Die d10 = new Die(10);
@@ -681,7 +679,6 @@ public class YouthPath {
 	 * Sets Starting Morph if none is set, overwrites Path Forward regardless
 	 * Adds a string to bgFluff explaining the roll.
 	 */
-	@SuppressWarnings("unused")
 	private FluffPackage getMigrantYouth(Integer pp){
 		String fluff = "Migrant: ";
 		Die d10 = new Die(10);
@@ -832,7 +829,6 @@ public class YouthPath {
 	 * Sets Starting Morph, overwrites Path Forward
 	 * Adds a string to bgFluff explaining the roll.
 	 */
-	@SuppressWarnings("unused")
 	private FluffPackage getCreatedYouth(Integer pp){
 		String fluff = "Created: ";
 		Die d10 = new Die(10);

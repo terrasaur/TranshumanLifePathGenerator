@@ -64,21 +64,32 @@ public class LifePath {
 	public LifePath(String name) {
 		super();
 		this.character   = new EPCharacter(name);
-		this.initFields();
+		this.clearFields();
 	}
 	public LifePath() {
 		super();
 		this.character   = new EPCharacter();
-		this.initFields();
+		this.clearFields();
 	}
 	
 	// Clears fields and whatnot
-	private void initFields(){
-		this.todo      = new TreeSet<String>();
+	private void clearFields(){
+		if (packages == null) 
+			packages = new ArrayList<LifePathPackage>();
+		else
+			packages.clear();
+		if (eventList == null) 
+			eventList = new ArrayList<PathEvent>();
+		else
+			eventList.clear();
+		if (todo == null)
+			todo = new TreeSet<String>();
+		else
+			todo.clear();
+		
 		this.childhood = new YouthPath();
 		this.adulthood = new AdultPath();
-		this.packages  = new ArrayList<LifePathPackage>();
-		this.eventList = new ArrayList<PathEvent>();
+		
 		this.character = new EPCharacter();
 		this.aptTemplate = "";
 		this.nativeLanguage = "";
@@ -92,7 +103,6 @@ public class LifePath {
 	 * Sets GUI-determined variables
 	 * @param randomMotivations - if the sim should pick random motivations
 	 * @param chooseSkills  - whether or not the sim should choose random skills
-	 * @param chooseSkills 
 	 * @param randomMotivations 
 	 * @param backgrounds - allowed backgrounds
 	 * @param factions - allowed factions
@@ -100,19 +110,20 @@ public class LifePath {
 	public void setUserOptions(boolean getFirewallEvent, boolean getStoryEvent, 
 			boolean randomMotivations, boolean chooseSkills, 
 			ArrayList<String> backgrounds, ArrayList<String> factions) {
+		this.clearFields();
 		this.getFirewallEvent = getFirewallEvent;
 		this.getStoryEvent = getStoryEvent;
 		this.chooseSkills = chooseSkills;
 		this.getRandomMotivations  = randomMotivations;
 		this.allowedBackgrounds = backgrounds;
-		this.allowedFactions = factions;
+		this.allowedFactions = factions;		
 	}
 	
 	/**
 	 * Generates entire life path from scratch. Will overwrite previous information.
 	 */
 	public void generateLifePath(){
-		this.initFields();
+		this.clearFields();
 		
 		Die d10  = new Die(10);
 		Die d100 = new Die(100);

@@ -277,7 +277,6 @@ public class LifePathGUI extends JFrame implements ActionListener,
 		Object source = event.getSource();
 		
 		if (source == this.newCharacterButton){
-			this.lifePath = new LifePath();
 			this.lifePath.setUserOptions(this.firewallEvent, this.storyEvent, this.randomMotivations, 
 					this.chooseSkills, this.backgrounds, this.factions);
 			this.lifePath.generateLifePath();
@@ -350,7 +349,7 @@ public class LifePathGUI extends JFrame implements ActionListener,
 	public static void main(String[] args) {
 		LifePath path = new LifePath();
 		LifePathGUI gui = new LifePathGUI();
-		
+
 		gui.setLifePath(path);		
 		
 	}

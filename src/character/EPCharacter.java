@@ -46,17 +46,11 @@ public class EPCharacter {
 	private int psiRating;
 	
 	public EPCharacter() {
-		super();
-		this.name = "";
-		this.CP = 1000;	
-		this.initFields();
+		this("", 1000);
 	}
 	
 	public EPCharacter(int CP) {
-		super();
-		this.name = "";
-		this.CP = CP;
-		this.initFields();
+		this("", CP);
 	}
 	
 	public EPCharacter(String name, int CP) {
@@ -66,10 +60,7 @@ public class EPCharacter {
 		this.initFields();
 	}
 	public EPCharacter(String name) {
-		super();
-		this.name = name;
-		this.CP = 1000;
-		this.initFields();
+		this(name, 1000);
 	}
 	
 	private class Stats{
@@ -131,6 +122,10 @@ public class EPCharacter {
 		this.equipment   = new ArrayList<String>();
 		this.sleights    = new ArrayList<String>();
 		this.psiRating   = 0;
+		this.credits     = 0;
+		this.background  = null;
+		this.faction     = null;
+		this.morph       = new Morph("Flat");
 	}
 
 	/**

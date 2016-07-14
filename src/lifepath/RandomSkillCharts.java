@@ -1,8 +1,5 @@
 package lifepath;
 
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,37 +24,33 @@ public class RandomSkillCharts {
 	 */
 	public static boolean setRandomSkillField(Skill s) {
 		String label = s.getText();
+		
 		if (label == null){
 			System.out.println(s.toString());
 			return false;
-		}
-		String newField = null;
-		Class<?>[] args = null; // to make everyone happy I guess
-		String functionName = "getRandom" + label + "Field";
-
-		try {
-			Method m = RandomSkillCharts.class.getDeclaredMethod(functionName, args);
-			m.setAccessible(true);
-			newField = (String)m.invoke(null);
-			
-			if (newField != null) {
-				s.setField(newField);
-				return true;
-			}
-			
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+		} else if (label == "Academics"){
+			s.setField(getRandomAcademicsField());
+		} else if (label == "Art"){
+			s.setField(ChartEntry.findResult(artFields, d100.Roll()));
+		} else if (label == "Hardware"){
+			s.setField(ChartEntry.findResult(hardwareFields, d100.Roll()));
+		} else if (label == "Interest"){
+			s.setField(getRandomInterestField());
+		} else if (label == "Profession"){
+			s.setField(ChartEntry.findResult(professionFields, d100.Roll()));
+		} else if (label == "Medicine"){
+			s.setField(getRandomMedicineField());
+		} else if (label == "Language"){
+			s.setField(ChartEntry.findResult(languageFields, d100.Roll()));
+		} else if (label == "Network"){
+			s.setField(ChartEntry.findResult(networkFields, d100.Roll()));
+		} else if (label == "Pilot"){
+			s.setField(ChartEntry.findResult(pilotFields, d100.Roll()));
+		} else {
+			return false;
 		}
 		
-		return false;
+		return true;
 	}
 	
 	/**
@@ -87,23 +80,7 @@ public class RandomSkillCharts {
 
 		return label;
 	}
-	
-	/**
-	 * Gets a random art field. Uses the table found on p.42 of Transhuman 
-	 * @return string containing field
-	 */
-	public static String getRandomArtField(){
-		return ChartEntry.findResult(artFields, d100.Roll());
-	}
-	
-	/**
-	 * Gets a random hardware field. Uses the table found on p.42 of Transhuman 
-	 * @return string containing field
-	 */
-	public static String getRandomHardwareField(){
-		return ChartEntry.findResult(hardwareFields, d100.Roll());
-	}
-	
+
 	/**
 	 * Gets a random interest. Might roll on place, faction, or network depending 
 	 * on specifics of the interest. Tables found on p 42-42 of Transhuman
@@ -130,13 +107,6 @@ public class RandomSkillCharts {
 		return label;
 	}
 		
-	/**
-	 * Gets a random Profession field. Uses the table found on p.43 of Transhuman 
-	 * @return string containing field
-	 */
-	public static String getRandomProfessionField(){
-		return ChartEntry.findResult(professionFields, d100.Roll());
-	}
 
 	/**
 	 * Gets a random medicine field. Uses the table found on p.43 of Transhuman 
@@ -151,29 +121,7 @@ public class RandomSkillCharts {
 		}
 		return ChartEntry.findResult(medicineFields, roll);
 	}
-	/**
-	 * Gets a random network. Uses the table found on p.43 of Transhuman 
-	 * @return string containing field
-	 */
-	public static String getRandomNetworkingField(){
-		return ChartEntry.findResult(networkFields, d100.Roll());
-	}
 
-	/**
-	 * Gets a random pilot field. Uses the table found on p.43 of Transhuman 
-	 * @return string containing field
-	 */
-	public static String getRandomPilotField(){
-		return ChartEntry.findResult(pilotFields, d100.Roll());
-	}	
-
-	/**
-	 * Gets a random language field. Uses the table found on p.43 of Transhuman 
-	 * @return string containing field
-	 */
-	public static String getRandomLanguageField(){
-		return ChartEntry.findResult(languageFields, d100.Roll());
-	}
 	
 	private static ChartEntry<String> newCE_Str (int min, int max, String label){
 		return new ChartEntry<String>(min, max, label);
