@@ -687,7 +687,7 @@ public class YouthPath {
 		if (roll <= 3) {
 			fluff += "Wandering the system";
 			if (this.startingMorph == null){
-				// 1–3   (p. 16) 1–6 , 7–0 
+				// 1-3   (p. 16) 1-6 , 7-0 
 				if (d10.Roll() < 7){
 					this.startingMorph = new Morph("Splicer");
 				} else {

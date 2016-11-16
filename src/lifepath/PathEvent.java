@@ -361,7 +361,7 @@ public class PathEvent {
 		backgroundEvent.add(new ChartEntry<PathEvent>(35, 36,
 				new PathEvent("You are raised in dangerous conditions where you have to adapt or die.", ActionType.addTrait, "Fast Learner")));
 		backgroundEvent.add(new ChartEntry<PathEvent>(37, 38, 
-				new PathEvent("You skip too much school.", "–20 to one skill")));
+				new PathEvent("You skip too much school.", "-20 to one skill")));
 		backgroundEvent.add(new ChartEntry<PathEvent>(39, 40, 
 				new PathEvent("Growing up isolated from others, you develop introvert tendencies.", ActionType.modifyAptitude, -5, "SAV")));
 		backgroundEvent.add(new ChartEntry<PathEvent>(41, 42, 
@@ -371,7 +371,7 @@ public class PathEvent {
 		backgroundEvent.add(new ChartEntry<PathEvent>(45, 46, 
 				new PathEvent("You grow up in a melting-pot, polyglot culture.", ActionType.addTrait, "Hyper Linguist")));
 		backgroundEvent.add(new ChartEntry<PathEvent>(47, 48, 
-				new PathEvent("You party too hard.", "–20 to one skill")));
+				new PathEvent("You party too hard.", "-20 to one skill")));
 		backgroundEvent.add(new ChartEntry<PathEvent>(49, 50, 
 				new PathEvent("Your childhood education is poor to non-existent.", ActionType.addTrait, "Illiterate")));
 		backgroundEvent.add(new ChartEntry<PathEvent>(51, 52, 
@@ -392,13 +392,13 @@ public class PathEvent {
 				new PathEvent("Your first experiments with forking prove to you that merging will not be easy.", 
 						ActionType.addTrait, "Divergent Personality")));
 		backgroundEvent.add(new ChartEntry<PathEvent>(67, 68, 
-				new PathEvent("You receive your first cortical stack at an early age—and luckily just in time.", ActionType.newMorph, "Any")));
+				new PathEvent("You receive your first cortical stack at an early age--and luckily just in time.", ActionType.newMorph, "Any")));
 		backgroundEvent.add(new ChartEntry<PathEvent>(69, 70, 
 				new PathEvent("You are raised around animals.", ActionType.addSkill, 10, "Animal Handling")));
 		backgroundEvent.add(new ChartEntry<PathEvent>(71, 72, 
 				new PathEvent("Your parents raise you with some unusual ideas.", ActionType.addTrait, "Faulty Education")));
 		backgroundEvent.add(new ChartEntry<PathEvent>(73, 74, 
-				new PathEvent("You cheat your way through school.", "–10 to one skill")));
+				new PathEvent("You cheat your way through school.", "-10 to one skill")));
 		backgroundEvent.add(new ChartEntry<PathEvent>(75, 76, 
 				new PathEvent("You enjoy urban exploration and getting into off-limits areas.", "Gain +10 to either Climbing or Infiltration skill")));
 		backgroundEvent.add(new ChartEntry<PathEvent>(77, 78, 
@@ -458,7 +458,7 @@ public class PathEvent {
 		preFallEvent.add(new ChartEntry<PathEvent>(45, 46, 
 				new PathEvent("Your work requires you to change your morph.", ActionType.newMorph, "No pod or uplift")));
 		preFallEvent.add(new ChartEntry<PathEvent>(47, 48, 
-				new PathEvent("Curiosity gets the better of you.", "Lose –5 to one aptitude")));
+				new PathEvent("Curiosity gets the better of you.", "Lose -5 to one aptitude")));
 		preFallEvent.add(new ChartEntry<PathEvent>(49, 50, 
 				new PathEvent("You lose a limb in a traumatic incident, but grow it back.",  ActionType.modifyAptitude, 1, "MOX")));
 		preFallEvent.add(new ChartEntry<PathEvent>(51, 52, 
@@ -505,7 +505,7 @@ public class PathEvent {
 		preFallEvent.add(new ChartEntry<PathEvent>(89, 90, 
 				new PathEvent("You learn the hard way that ignoring money management lessons was a bad idea.", "Lose 10,000 from your starting credit")));
 		preFallEvent.add(new ChartEntry<PathEvent>(91, 92, 
-				new PathEvent("You take the fall for a crime you may or may not have been complicit in.",  ActionType.modifyAptitude, 1, "MOX", "Lose –10 c-rep")));
+				new PathEvent("You take the fall for a crime you may or may not have been complicit in.",  ActionType.modifyAptitude, 1, "MOX", "Lose -10 c-rep")));
 		preFallEvent.add(new ChartEntry<PathEvent>(93, 94, 
 				new PathEvent("An accident on a space elevator leaves you fearful of space.", ActionType.addTrait, "Phobia Disorder (Microgravity)")));
 		preFallEvent.add(new ChartEntry<PathEvent>(95, 96, 
@@ -518,7 +518,7 @@ public class PathEvent {
 		storyEvent.add(new ChartEntry<PathEvent>(1,  2,  
 				new PathEvent("After a long stretch of bad, you hit bottom. No way left to go but up.", ActionType.noAction, "Any")));
 		storyEvent.add(new ChartEntry<PathEvent>(3,  4,  
-				new PathEvent("You participate as a test subject in a research project. You suffer no ill effects … that you can tell.", ActionType.noAction, "Any")));
+				new PathEvent("You participate as a test subject in a research project. You suffer no ill effects -- that you can tell.", ActionType.noAction, "Any")));
 		storyEvent.add(new ChartEntry<PathEvent>(5,  6,  
 				new PathEvent("A prominent journalist befriends you as a source and occasional confidante.", ActionType.noAction, "Any")));
 		storyEvent.add(new ChartEntry<PathEvent>(7,  8,  
@@ -558,7 +558,7 @@ public class PathEvent {
 				new PathEvent("Political upheaval in your local habitat/polity throws your life into turmoil.", ActionType.noAction, "Any")));
 		storyEvent.add(new ChartEntry<PathEvent>(39, 40, 
 				new PathEvent("You are the only survivor of a deadly accident on board a ship or small hab, "
-						+ "which raises some suspicion …", ActionType.noAction, "Post-Fall Only")));
+						+ "which raises some suspicion -", ActionType.noAction, "Post-Fall Only")));
 		storyEvent.add(new ChartEntry<PathEvent>(41, 42, 
 				new PathEvent("Your life has been blissfully serene and untroubled. Your friends may secretly hate you.", ActionType.noAction, "Any")));
 		storyEvent.add(new ChartEntry<PathEvent>(43, 44, 
@@ -603,7 +603,7 @@ public class PathEvent {
 		storyEvent.add(new ChartEntry<PathEvent>(81, 82, 
 				new PathEvent("You befriend a brinker with some interesting ideas and unbelievable stories. Well, almost unbelievable.", ActionType.noAction, "Post-Fall Only")));
 		storyEvent.add(new ChartEntry<PathEvent>(83, 84, 
-				new PathEvent("You find repeat evidence that someone has you under close surveillance—but why?", ActionType.noAction, "Any")));
+				new PathEvent("You find repeat evidence that someone has you under close surveillance--but why?", ActionType.noAction, "Any")));
 		storyEvent.add(new ChartEntry<PathEvent>(85, 86, 
 				new PathEvent("You are fairly certain that your new friend is secretly a singularity seeker.", ActionType.noAction, "Post-Fall Only")));
 		storyEvent.add(new ChartEntry<PathEvent>(87, 88, 
@@ -654,7 +654,7 @@ public class PathEvent {
 				new PathEvent("You hide your body away in cold storage on Earth before farcasting off to safety.", ActionType.newMorph, "Any")));
 		fallEvent.add(new ChartEntry<PathEvent>(37, 38, 
 				new PathEvent("Your ego escapes the devastation of Earth, only to be locked away in cold storage for years. You are only recently resleeved.",
-						ActionType.newMorph, "Any", "Trait: Real World Naiveté")));
+						ActionType.newMorph, "Any", "Trait: Real World NaivetÃ©")));
 		fallEvent.add(new ChartEntry<PathEvent>(39, 40, 
 				new PathEvent("Your ego survives the Fall but is locked in simulspace for years before you are resleeved.", 
 						ActionType.newMorph, "Any", "Skill: 20 Interfacing")));
@@ -668,7 +668,7 @@ public class PathEvent {
 		fallEvent.add(new ChartEntry<PathEvent>(47, 48, 
 				new PathEvent("You risk your life in a desperate holding action.", ActionType.addTrait, "Brave")));
 		fallEvent.add(new ChartEntry<PathEvent>(49, 50, 
-				new PathEvent("You are infected … but get better.", ActionType.overrideFocus, "Async")));
+				new PathEvent("You are infected -- but get better.", ActionType.overrideFocus, "Async")));
 		fallEvent.add(new ChartEntry<PathEvent>(51, 52, 
 				new PathEvent("You learn the hard way how susceptible you are to exsurgent influence.", ActionType.addTrait, "Psi Vulnerability")));
 		fallEvent.add(new ChartEntry<PathEvent>(53, 54, 
@@ -682,12 +682,12 @@ public class PathEvent {
 		fallEvent.add(new ChartEntry<PathEvent>(61, 62, 
 				new PathEvent("You make a bad call that gets people killed. Now you question your gut feelings.", ActionType.modifyAptitude, -5, "INT")));
 		fallEvent.add(new ChartEntry<PathEvent>(63, 64, 
-				new PathEvent("You were horrified at the idea of resleeving, but the alternative seemed worse—or so you thought.", 
+				new PathEvent("You were horrified at the idea of resleeving, but the alternative seemed worse--or so you thought.", 
 						ActionType.newMorph, "Any", "Trait: Morphing Disorder (Level 3)")));
 		fallEvent.add(new ChartEntry<PathEvent>(65, 66, 
 				new PathEvent("A nanoviral infection leaves you permanently damaged.", ActionType.addTrait, "Neural Damage")));
 		fallEvent.add(new ChartEntry<PathEvent>(67, 68, 
-				new PathEvent("You have unfortunate memories of some … thing … eating your face off.",
+				new PathEvent("You have unfortunate memories of some *thing* eating your face off.",
 						ActionType.newMorph, "Any", "Trait: Timid")));
 		fallEvent.add(new ChartEntry<PathEvent>(69, 70, 
 				new PathEvent("You witness unspeakable horrors during the Fall, standing idly by while others die.", ActionType.addTrait, "Combat Paralysis")));
@@ -702,7 +702,7 @@ public class PathEvent {
 		fallEvent.add(new ChartEntry<PathEvent>(79, 80, 
 				new PathEvent("The only way you can cope with the loss of your former life is through drugs.", ActionType.addTrait, "Drug Fiend")));
 		fallEvent.add(new ChartEntry<PathEvent>(81, 82, 
-				new PathEvent("You cope with the horrors you experience in the midst of evacuation the only way you could—by postponing the trauma until you are safe.", 
+				new PathEvent("You cope with the horrors you experience in the midst of evacuation the only way you could--by postponing the trauma until you are safe.", 
 						ActionType.addTrait, "Trauma Tolerance (Level 1)")));
 		fallEvent.add(new ChartEntry<PathEvent>(83, 84, 
 				new PathEvent("Your willingness to profit from others' misery gains you respect in some circles.", 
@@ -710,7 +710,7 @@ public class PathEvent {
 		fallEvent.add(new ChartEntry<PathEvent>(85, 86, 
 				new PathEvent("You experience things during the Fall that would leave others a shattered mess.", ActionType.addTrait, "Hardening")));
 		fallEvent.add(new ChartEntry<PathEvent>(87, 88, 
-				new PathEvent("You lose everything—and nearly lose your mind as well. It will never recover its former strength.", ActionType.addTrait, "Frail Sanity")));
+				new PathEvent("You lose everything--and nearly lose your mind as well. It will never recover its former strength.", ActionType.addTrait, "Frail Sanity")));
 		fallEvent.add(new ChartEntry<PathEvent>(89, 90, 
 				new PathEvent("Not only do you die during the Fall, your backups are lost as well. You live on as a beta fork of your original self.", 
 						ActionType.newMorph, "Any", "Trait: Beta")));
@@ -731,7 +731,7 @@ public class PathEvent {
 		postFallEvent.add(new ChartEntry<PathEvent>(1, 3, 
 				new PathEvent("You are hired by a wealthy private party for some exclusive exoplanet missions.", ActionType.gatecrashing, "Roll on the Gatecrashing Event table")));
 		postFallEvent.add(new ChartEntry<PathEvent>(4, 
-				new PathEvent("You reinvent yourself.", "Gain +5 to one aptitude and –5 to another aptitude")));
+				new PathEvent("You reinvent yourself.", "Gain +5 to one aptitude and -5 to another aptitude")));
 		postFallEvent.add(new ChartEntry<PathEvent>(5, 6,
 				new PathEvent("Your employer/collective sends you on a gatecrashing op.", ActionType.gatecrashing, "Roll on the Gatecrashing Event table")));
 		postFallEvent.add(new ChartEntry<PathEvent>(7, 
@@ -794,11 +794,11 @@ public class PathEvent {
 		postFallEvent.add(new ChartEntry<PathEvent>(37, 
 				new PathEvent("No matter how often your friends warn you, you are promiscuous about your online data.", ActionType.addTrait, "Data Footprint")));
 		postFallEvent.add(new ChartEntry<PathEvent>(38, 
-				new PathEvent("Nothing ever seems to go your way—your cursed luck is legendary.", ActionType.addTrait, "Bad Luck")));
+				new PathEvent("Nothing ever seems to go your way--your cursed luck is legendary.", ActionType.addTrait, "Bad Luck")));
 		postFallEvent.add(new ChartEntry<PathEvent>(39, 
 				new PathEvent("You complete a major project of importance to your work/faction.", "Gain +10 to one rep score")));
 		postFallEvent.add(new ChartEntry<PathEvent>(40, 
-				new PathEvent("A project of importance to your work/faction fails under your direction.", "Lose –10 to one rep score")));
+				new PathEvent("A project of importance to your work/faction fails under your direction.", "Lose -10 to one rep score")));
 		postFallEvent.add(new ChartEntry<PathEvent>(41, 
 				new PathEvent("You take up arms in a regional conflict.", "Gain +10 to one Combat skill")));
 		postFallEvent.add(new ChartEntry<PathEvent>(42, 
@@ -844,13 +844,13 @@ public class PathEvent {
 				new PathEvent("Due to a sudden financial crisis, you draw an emergency loan with unfavorable terms from an unforgiving loan shark.", 
 						ActionType.addTrait, "Debt (Level 1)")));
 		postFallEvent.add(new ChartEntry<PathEvent>(62 , 
-				new PathEvent("You commit a serious crime, but get away—for now.", ActionType.addTrait, "On the Run")));
+				new PathEvent("You commit a serious crime, but get away--for now.", ActionType.addTrait, "On the Run")));
 		postFallEvent.add(new ChartEntry<PathEvent>(63, 65, 
 				new PathEvent(" You win the gatecrashing lottery and a free ticket to Pandora.", ActionType.gatecrashing, "Roll on the Gatecrashing Event table")));
 		postFallEvent.add(new ChartEntry<PathEvent>(66 , 
 				new PathEvent("You go into business.", ActionType.addTrait, "Entrepreneur (Level 1)")));
 		postFallEvent.add(new ChartEntry<PathEvent>(67 , 
-				new PathEvent("You become embroiled in a messy professional dispute.", "Lose –5 to one rep score")));
+				new PathEvent("You become embroiled in a messy professional dispute.", "Lose -5 to one rep score")));
 		postFallEvent.add(new ChartEntry<PathEvent>(68 , 
 				new PathEvent("You lose a contractual dispute in Extropian space.", ActionType.addTrait, "Deferred Indenture (Level 1)")));
 		postFallEvent.add(new ChartEntry<PathEvent>(69 , 
@@ -891,7 +891,7 @@ public class PathEvent {
 		postFallEvent.add(new ChartEntry<PathEvent>(85 , 
 				new PathEvent("Your exceptional nature is noticed.", ActionType.addTrait, "Patron")));
 		postFallEvent.add(new ChartEntry<PathEvent>(86 , 
-				new PathEvent("You get fired/kicked out.", "Lose 10,000 from your starting credit or –10 rep")));
+				new PathEvent("You get fired/kicked out.", "Lose 10,000 from your starting credit or -10 rep")));
 		postFallEvent.add(new ChartEntry<PathEvent>(87 , 
 				new PathEvent("An established university offers you a steady position.", ActionType.addTrait, "Tenure")));
 		postFallEvent.add(new ChartEntry<PathEvent>(88 , 
@@ -907,7 +907,7 @@ public class PathEvent {
 				new PathEvent("You are forced to resleeve in less-than-favorable conditions and end up with a morph with issues.", ActionType.newMorph, 
 						"Any", "Trait: Aggressive GRM")));
 		postFallEvent.add(new ChartEntry<PathEvent>(92, 
-				new PathEvent("You fall in with a new crowd—one that will have your back.", ActionType.addTrait, "Allies")));
+				new PathEvent("You fall in with a new crowd--one that will have your back.", ActionType.addTrait, "Allies")));
 		postFallEvent.add(new ChartEntry<PathEvent>(93, 
 				new PathEvent("You are part of a group that discovers a derelict ship and makes a great salvaging score.", ActionType.modifyCredits, 20000)));
 		postFallEvent.add(new ChartEntry<PathEvent>(94, 
@@ -1014,9 +1014,9 @@ public class PathEvent {
 		firewallEvent.add(new ChartEntry<PathEvent>(63, 64 , 
 				new PathEvent("You are one of the few survivors of an exsurgent outbreak on your habitat.", ActionType.addTrait, "Psi Defense")));
 		firewallEvent.add(new ChartEntry<PathEvent>(65, 66 , 
-				new PathEvent("You find a relic. Bad things happen. Firewall cleans up the mess.", "–10 to one rep score.")));
+				new PathEvent("You find a relic. Bad things happen. Firewall cleans up the mess.", "-10 to one rep score.")));
 		firewallEvent.add(new ChartEntry<PathEvent>(67, 68 , 
-				new PathEvent("You were a member/supporter of one of the groups that evolved into Firewall from before the Fall. You took some time off, but now you’re back.", 
+				new PathEvent("You were a member/supporter of one of the groups that evolved into Firewall from before the Fall. You took some time off, but now you're back.", 
 						ActionType.modifyStat, 10, "i-rep")));
 		firewallEvent.add(new ChartEntry<PathEvent>(69, 70 , 
 				new PathEvent("You single-handedly foil an impending outbreak, but the local authorities blame you for the carnage. Firewall helps you escape.", ActionType.addTrait, "On the Run")));
@@ -1031,7 +1031,7 @@ public class PathEvent {
 		firewallEvent.add(new ChartEntry<PathEvent>(79, 80 , 
 				new PathEvent("You uncover a conspiracy within your faction and Firewall steps in to help you deal with it.", "Gain +10 to one rep score")));
 		firewallEvent.add(new ChartEntry<PathEvent>(81, 82 , 
-				new PathEvent("You are recruited to help Firewall cover up a secret or outbreak.", ActionType.modifyAptitude, 10, "i-rep", "Lose –10 to one rep score of your choice")));
+				new PathEvent("You are recruited to help Firewall cover up a secret or outbreak.", ActionType.modifyAptitude, 10, "i-rep", "Lose -10 to one rep score of your choice")));
 		firewallEvent.add(new ChartEntry<PathEvent>(83, 84 , 
 				new PathEvent("You uncover a sleeper exsurgent cell the hard way.", ActionType.addTrait, "Phobia Disorder (Exsurgents)")));
 		firewallEvent.add(new ChartEntry<PathEvent>(85, 86 , 

@@ -424,7 +424,7 @@ public class FocusPackage extends LifePathPackage {
 			}
 			break;
 		case CovertOps:
-			this.suggestedMotivations.add("–TITAN Tech");
+			this.suggestedMotivations.add("-TITAN Tech");
 			this.suggestedMotivations.add("+Survival");
 			this.suggestedMotivations.add("+Explosions");
 			if (this.ppCost == 1){
@@ -1341,7 +1341,7 @@ public class FocusPackage extends LifePathPackage {
 			}
 			break;
 		case Wrecker:
-			this.suggestedMotivations.add("–TITANs");
+			this.suggestedMotivations.add("-TITANs");
 			this.suggestedMotivations.add("+Survival");
 			this.suggestedMotivations.add("+Explosions");
 			if (this.ppCost == 1){

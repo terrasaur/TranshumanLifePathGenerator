@@ -236,7 +236,7 @@ public class LifePath {
 		output += this.adulthood.getPathHistory() + "\n";
 		output += "Life Path Events:" + "\n";
 		for (PathEvent ev : this.eventList) {
-			output += "   • " + wrap(ev.toString(), 75) + "\n";
+			output += "   â€¢ " + wrap(ev.toString(), 75) + "\n";
 		}
 
 		//output += "Starting Credits: " + this.character.getCredits() + " credits";
@@ -245,8 +245,8 @@ public class LifePath {
 		output += "\n";
 		output += "Package list: \n";
 		for (LifePathPackage p : this.packages){
-			output += "   • " + p.toString() + "\n";
-			//output += "   • " + p.prettyPrint() + "\n";
+			output += "   â€¢ " + p.toString() + "\n";
+			//output += "   â€¢ " + p.prettyPrint() + "\n";
 		}
 
 		output += "\n CHARACTER INFORMATION \n";
@@ -256,7 +256,7 @@ public class LifePath {
 		output += "\n";
 		output += "Remaining Actions:\n";
 		for (String s : this.todo){
-			output += "   • " + wrap( s , 75) + "\n";
+			output += "   â€¢ " + wrap( s , 75) + "\n";
 		}
 		output += "\n";
 		return output;
@@ -404,9 +404,9 @@ public class LifePath {
 		while(roll <= 5 && count1 <=3 && count3 < 1 && count4 <= 3){
 			if (roll == 1) {
 				count1++;
-				this.todo.add("Lose –10 SOM, REF, or COO (your choice)");
+				this.todo.add("Lose -10 SOM, REF, or COO (your choice)");
 			} else if (roll == 2) {
-				this.todo.add("Lose –5 SOM, REF, or COO (your choice)");
+				this.todo.add("Lose -5 SOM, REF, or COO (your choice)");
 			} else if (roll == 3){
 				count3++;
 				this.character.addTrait("Immortality Blues");

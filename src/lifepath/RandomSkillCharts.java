@@ -62,7 +62,7 @@ public class RandomSkillCharts {
 		String label = ChartEntry.findResult(academicsFields, roll);;
 		
 		// Various weird cases
-		if (roll >= 51 && roll <= 53){ //51–53 (Pre-Fall/Post-Fall) History
+		if (roll >= 51 && roll <= 53){ //51-53 (Pre-Fall/Post-Fall) History
 			if (d100.Roll() <= 50)
 				label = "Pre-Fall " + label;
 			else
@@ -94,14 +94,14 @@ public class RandomSkillCharts {
 			String[] opts = label.split("/");
 			return opts[Die.getRandIdx(opts.length)];
 		}
-		if (roll >= 51 && roll <= 52){ //51–52 (Topic) Mesh Forums
+		if (roll >= 51 && roll <= 52){ //51-52 (Topic) Mesh Forums
 			if (d100.Roll() <= 25)
 				label = ChartEntry.findResult(factionFields, d100.Roll()) + label;
 			else
 				label = ChartEntry.findResult(professionFields, d100.Roll()) + label;
 			
 		}
-		if (roll >= 69 && roll <= 70) {//69–70 (Location) Places of Interest
+		if (roll >= 69 && roll <= 70) {//69-70 (Location) Places of Interest
 			label = ChartEntry.findResult(placeFields, d100.Roll()) + label;
 		}
 		return label;
@@ -115,7 +115,7 @@ public class RandomSkillCharts {
 	public static String getRandomMedicineField(){
 		int roll = d100.Roll();
 		
-		if (roll >= 91 && roll <= 95){	// 91–95 Uplifts (by type)
+		if (roll >= 91 && roll <= 95){	// 91-95 Uplifts (by type)
 			Morph upliftType = Charts.getUplift();
 			return "Uplift (" + upliftType.getLabel() + ")";			
 		}

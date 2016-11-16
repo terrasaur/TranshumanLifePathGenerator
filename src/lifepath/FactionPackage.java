@@ -57,7 +57,7 @@ public class FactionPackage extends LifePathPackage {
 		MercurialUplift  ("Mercurial: Uplift"),
 		NanoEcologist    ("Nano-Ecologist"),
 		Orbital          ("Orbital"),
-		Outster          ("Out’ster"),
+		Outster          ("Out'ster"),
 		Precautionist    ("Precautionist"),
 		Preservationist  ("Preservationist"),
 		Reclaimer        ("Reclaimer"),

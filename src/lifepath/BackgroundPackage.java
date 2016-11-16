@@ -277,8 +277,8 @@ public class BackgroundPackage extends LifePathPackage {
 		case ColonistSecurityStaff:
 			this.suggestedMotivations.add("+Law and Order"); 
 			this.suggestedMotivations.add("+Survival"); 
-			this.suggestedMotivations.add("–Criminals");
-			this.suggestedMotivations.add("–Autonomists");
+			this.suggestedMotivations.add("-Criminals");
+			this.suggestedMotivations.add("-Autonomists");
 			if (this.ppCost == 1){
 				this.skillList.add(new Skill("Beam Weapons", 40));
 				if (this.getRandomSkills)
@@ -662,7 +662,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Interfacing", 40));
 				this.skillList.add(new Skill("Programming", 30));
 				this.traitList.add("Anomalous Mind");
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("Social Stigma (AGI)");
 			} else if (this.ppCost == 3) {
 				this.bonusList.add(new StatBonus("MOX", 1)); 
@@ -676,7 +676,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Programming", 40)); 
 				this.skillList.add(new Skill("Research", 30));
 				this.traitList.add("Anomalous Mind");
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("Social Stigma (AGI)");
 			} else {
 				this.bonusList.add(new StatBonus("MOX", 1));
@@ -693,7 +693,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Programming", 40)); 
 				this.skillList.add(new Skill("Research", 35));
 				this.traitList.add("Anomalous Mind");
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("Social Stigma (AGI)");
 			}
 			break;
@@ -711,7 +711,7 @@ public class BackgroundPackage extends LifePathPackage {
 					this.choiceList.add("Add Academics: Psychology or Academics: Sociology at 30"); 				
 				this.skillList.add(new Skill("Interfacing", 40)); 
 				this.skillList.add(new Skill("Kinesics", 35));
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("Social Stigma (AGI)");
 			} else if (this.ppCost == 3) {
 				if (this.getRandomSkills)
@@ -729,7 +729,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Persuasion", 40)); 
 				this.skillList.add(new Skill("Profession", "Psychotherapy", 30));
 				this.skillList.add(new Skill("Research", 30));
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("Social Stigma (AGI)");
 			} else {
 				this.bonusList.add(new StatBonus("SAV", 5));
@@ -752,7 +752,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Profession", "Psychotherapy", 30)); 
 				this.skillList.add(new Skill("Protocol", 30)); 
 				this.skillList.add(new Skill("Research", 30));
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("Social Stigma (AGI)");
 			}
 			break;
@@ -765,7 +765,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Academics", "Choice", 30)); 
 				this.skillList.add(new Skill("Interfacing", 40));
 				this.skillList.add(new Skill("Programming", 35));
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("Social Stigma (AGI)");
 			} else if (this.ppCost == 3) {
 				this.skillList.add(new Skill("Academics", "Choice", 40)); 
@@ -777,7 +777,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Pilot", "Choice", 30)); 
 				this.skillList.add(new Skill("Profession", "Choice", 30)); 
 				this.skillList.add(new Skill("Programming", 40));
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("Social Stigma (AGI)");
 			} else {
 				this.bonusList.add(new StatBonus("REF", 5));
@@ -793,7 +793,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Profession", "Choice", 40)); 
 				this.skillList.add(new Skill("Programming", 50)); 
 				this.skillList.add(new Skill("Research", 30));
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("Social Stigma (AGI)");
 			}
 			break;
@@ -805,7 +805,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Academics", "Choice", 30));
 				this.skillList.add(new Skill("Interfacing", 35)); 
 				this.skillList.add(new Skill("Research", 40));
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("Social Stigma (AGI)");
 			} else if (this.ppCost == 3) {
 				this.skillList.add(new Skill("Academics", "Choice", 40)); 
@@ -817,7 +817,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Profession", "Choice", 20)); 
 				this.skillList.add(new Skill("Programming", 30)); 
 				this.skillList.add(new Skill("Research", 50));
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("Social Stigma (AGI)");
 			} else {
 				this.bonusList.add(new StatBonus("COG", 5));
@@ -833,7 +833,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Profession", "Choice", 40)); 
 				this.skillList.add(new Skill("Programming", 40));
 				this.skillList.add(new Skill("Research", 50));
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("Social Stigma (AGI)");
 			}
 			break;
@@ -870,7 +870,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Profession", "Choice", 50)); 
 				this.skillList.add(new Skill("Programming", 30));
 				this.skillList.add(new Skill("Scrounging", 50));
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 			}
 			break;
 		case IsolateSurvivalist:
@@ -914,14 +914,14 @@ public class BackgroundPackage extends LifePathPackage {
 			this.suggestedMotivations.add("+Neurodiversity"); 
 			this.suggestedMotivations.add("+Sadism"); 
 			this.suggestedMotivations.add("+Vengeance");
-			this.suggestedMotivations.add("–Research");
+			this.suggestedMotivations.add("-Research");
 			if (this.ppCost == 1){
 				this.skillList.add(new Skill("Academics", "Choice", 30));
 				this.skillList.add(new Skill("Control", 35)); 
 				this.skillList.add(new Skill("Free Fall", 15));
 				this.traitList.add("Psi (Level 2)");
 				this.bonusList.add(new StatBonus("Mental Disorder", 3));				
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("On the Run");
 				this.bonusList.add(new StatBonus("psi-gamma", 2));
 			} else if (this.ppCost == 3) {
@@ -936,7 +936,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Profession", "Choice", 20)); 
 				this.traitList.add("Psi (Level 2)"); 
 				this.bonusList.add(new StatBonus("Mental Disorder", 3));
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("On the Run");				
 				this.bonusList.add(new StatBonus("psi-chi", 1));
 				this.bonusList.add(new StatBonus("psi-gamma", 3));
@@ -957,7 +957,7 @@ public class BackgroundPackage extends LifePathPackage {
 				this.skillList.add(new Skill("Unarmed Combat", 20));
 				this.traitList.add("Psi (Level 2)"); 
 				this.bonusList.add(new StatBonus("Mental Disorder", 3));
-				this.traitList.add("Real World Naiveté");
+				this.traitList.add("Real World NaivetÃ©");
 				this.traitList.add("On the Run");
 				this.bonusList.add(new StatBonus("psi-chi", 2));
 				this.bonusList.add(new StatBonus("psi-gamma", 5));
@@ -1044,7 +1044,7 @@ public class BackgroundPackage extends LifePathPackage {
 		case ReinstantiatedCivilian:
 			this.suggestedMotivations.add("+Reclaiming Earth"); 
 			this.suggestedMotivations.add("+Survival"); 
-			this.suggestedMotivations.add("–TITAN Tech");
+			this.suggestedMotivations.add("-TITAN Tech");
 			if (this.ppCost == 1){
 				this.choiceList.add("Add any two non-Psi skills of your choice at 40");
 				this.skillList.add(new Skill("Interfacing", 15)); 
@@ -1081,7 +1081,7 @@ public class BackgroundPackage extends LifePathPackage {
 		case ReinstantiatedInfomorph:
 			this.suggestedMotivations.add("+Reclaiming Earth"); 
 			this.suggestedMotivations.add("+Survival"); 
-			this.suggestedMotivations.add("–Virtual Reality");
+			this.suggestedMotivations.add("-Virtual Reality");
 			this.suggestedMotivations.add("+Virtual Reality");
 			this.suggestedMotivations.add("+TITANs");
 			if (this.ppCost == 1){
@@ -1119,7 +1119,7 @@ public class BackgroundPackage extends LifePathPackage {
 		case ReinstantiatedMilitary:
 			this.suggestedMotivations.add("+Reclaiming Earth"); 
 			this.suggestedMotivations.add("+Survival"); 
-			this.suggestedMotivations.add("–TITANs");
+			this.suggestedMotivations.add("-TITANs");
 			if (this.ppCost == 1){
 				this.choiceList.add("Add any one Combat skill of your choice at 40"); 
 				this.skillList.add(new Skill("Freerunning", 15));

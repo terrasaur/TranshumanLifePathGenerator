@@ -938,7 +938,7 @@ public class Morph {
 			break;
 		case Whiplash:
 			this.implants.add(new Implant(ImplantList.ChameleonSkin));
-			this.traits.add("Tendril Attack (Unarmed Combat skill, 1d10 + (SOM ÷ 10) DV, "
+			this.traits.add("Tendril Attack (Unarmed Combat skill, 1d10 + (SOM / 10) DV, "
 					+ "+10 to disarming called shot attacks)");			 
 			this.stats.get("COO").value = 5; 
 			this.stats.get("SOM").value = 10; 
@@ -999,7 +999,7 @@ public class Morph {
 			this.stats.get("REF").value = 5; 
 			this.stats.get("COO").value = 5;
 			this.traits.add("Lacks Manipulators");
-			this.traits.add("Difficult time in microgravity (–30 to Free Fall Tests)");
+			this.traits.add("Difficult time in microgravity (-30 to Free Fall Tests)");
 			this.traits.add("Non-Human Biochemistry");
 			break;
 		case FlyingSquid:
@@ -1015,7 +1015,7 @@ public class Morph {
 			this.stats.get("SOM").value = 5;
 			this.aptChoice = "+5 to one other aptitude";
 			this.traits.add("Skill: 30 Swimming");
-			this.traits.add("Beak Attack (1d10 + 1 DV, AP –1)");
+			this.traits.add("Beak Attack (1d10 + 1 DV, AP -1)");
 			this.traits.add("Limber (Level 2)");
 			this.traits.add("Social Stigma (Pod)");
 			this.traits.add("Non-Mammalian Biochemistry");		
@@ -1033,7 +1033,7 @@ public class Morph {
 			this.stats.get("INT").value = 5; 
 			this.stats.get("REF").value = 5; 
 			this.stats.get("SOM").value = 5;
-			this.traits.add("Bite Attack (1d10 + 1 DV, AP –1)");
+			this.traits.add("Bite Attack (1d10 + 1 DV, AP -1)");
 			this.traits.add("Social Stigma (Pod)");
 			this.traits.add("Unattractive (Level 2)");
 			this.aptMax = 25;
@@ -1472,7 +1472,7 @@ public class Morph {
 			this.aptChoice = "+5 to one other aptitude";
 			this.traits.add("Armor 10/10 (20/20 with	Industrial Armor)");
 			this.traits.add("Large Size");
-			this.traits.add("Disassembly tools inflict 3d10 +(SOM ÷ 10) DV at AP -5");
+			this.traits.add("Disassembly tools inflict 3d10 +(SOM / 10) DV at AP -5");
 			this.aptMaxSOM = 40;
 			break;
 		case FightingKite:
